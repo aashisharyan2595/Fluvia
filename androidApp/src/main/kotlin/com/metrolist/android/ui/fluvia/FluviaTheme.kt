@@ -111,14 +111,15 @@ fun FluviaTheme(
     }
 }
 
-// Seam for font loading: replace this body, keep the signature.
-private fun fluviaFontFamily(id: String): FontFamily = FontFamily.Default
+// Seam for font loading. Null keeps the locale-aware family MetrolistTypography selected; a loaded font replaces it.
+@Suppress("UNUSED_PARAMETER")
+private fun fluviaFontFamily(id: String): FontFamily? = null
 
 private fun Typography.fluvia(
-    fontFamily: FontFamily,
+    fontFamily: FontFamily?,
     scale: Float,
 ): Typography =
-    Typography(
+    copy(
         displayLarge = displayLarge.fluvia(fontFamily, scale),
         displayMedium = displayMedium.fluvia(fontFamily, scale),
         displaySmall = displaySmall.fluvia(fontFamily, scale),
@@ -134,12 +135,27 @@ private fun Typography.fluvia(
         labelLarge = labelLarge.fluvia(fontFamily, scale),
         labelMedium = labelMedium.fluvia(fontFamily, scale),
         labelSmall = labelSmall.fluvia(fontFamily, scale),
+        displayLargeEmphasized = displayLargeEmphasized.fluvia(fontFamily, scale),
+        displayMediumEmphasized = displayMediumEmphasized.fluvia(fontFamily, scale),
+        displaySmallEmphasized = displaySmallEmphasized.fluvia(fontFamily, scale),
+        headlineLargeEmphasized = headlineLargeEmphasized.fluvia(fontFamily, scale),
+        headlineMediumEmphasized = headlineMediumEmphasized.fluvia(fontFamily, scale),
+        headlineSmallEmphasized = headlineSmallEmphasized.fluvia(fontFamily, scale),
+        titleLargeEmphasized = titleLargeEmphasized.fluvia(fontFamily, scale),
+        titleMediumEmphasized = titleMediumEmphasized.fluvia(fontFamily, scale),
+        titleSmallEmphasized = titleSmallEmphasized.fluvia(fontFamily, scale),
+        bodyLargeEmphasized = bodyLargeEmphasized.fluvia(fontFamily, scale),
+        bodyMediumEmphasized = bodyMediumEmphasized.fluvia(fontFamily, scale),
+        bodySmallEmphasized = bodySmallEmphasized.fluvia(fontFamily, scale),
+        labelLargeEmphasized = labelLargeEmphasized.fluvia(fontFamily, scale),
+        labelMediumEmphasized = labelMediumEmphasized.fluvia(fontFamily, scale),
+        labelSmallEmphasized = labelSmallEmphasized.fluvia(fontFamily, scale),
     )
 
 private fun TextStyle.fluvia(
-    fontFamily: FontFamily,
+    fontFamily: FontFamily?,
     scale: Float,
-): TextStyle = copy(fontFamily = fontFamily, fontSize = fontSize * scale, lineHeight = lineHeight * scale)
+): TextStyle = copy(fontFamily = fontFamily ?: this.fontFamily, fontSize = fontSize * scale, lineHeight = lineHeight * scale)
 
 private fun fluviaShapes(scale: Float): Shapes =
     Shapes(
