@@ -5700,8 +5700,10 @@
     <string name="fluvia_glass_edge">Glass edge</string>
     <!-- Translators: Shown instead of a number when a glass slider follows the glass level; also the button that returns the slider to that state. -->
     <string name="fluvia_glass_auto">Auto</string>
-    <!-- Translators: Slider value in pixels. %1$d is the number. -->
-    <string name="fluvia_value_pixels">%1$d px</string>
+    <!-- Translators: Slider value in density-independent pixels. %1$d is the number. -->
+    <string name="fluvia_value_dp">%1$d dp</string>
+    <!-- Translators: Hint under a colour setting that does not apply while song artwork colours are on. %1$s is the name of that switch. -->
+    <string name="fluvia_colours_need_manual">Turn off %1$s to choose your own</string>
     <!-- Translators: Slider value as a percentage. %1$d is the number and %2$s is the percent sign. -->
     <string name="fluvia_value_percent">%1$d%2$s</string>
     <!-- Translators: Title of the accent colour setting on the Appearance screen. -->

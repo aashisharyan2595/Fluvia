@@ -75,6 +75,7 @@ import com.metrolist.shared.generated.resources.fluvia_background_custom
 import com.metrolist.shared.generated.resources.fluvia_background_mesh
 import com.metrolist.shared.generated.resources.fluvia_background_solid
 import com.metrolist.shared.generated.resources.fluvia_colour_adjusted
+import com.metrolist.shared.generated.resources.fluvia_colours_need_manual
 import com.metrolist.shared.generated.resources.fluvia_corners
 import com.metrolist.shared.generated.resources.fluvia_corners_pill
 import com.metrolist.shared.generated.resources.fluvia_corners_sharp
@@ -115,8 +116,9 @@ import com.metrolist.shared.generated.resources.fluvia_spacing
 import com.metrolist.shared.generated.resources.fluvia_spacing_comfortable
 import com.metrolist.shared.generated.resources.fluvia_spacing_compact
 import com.metrolist.shared.generated.resources.fluvia_spacing_spacious
+import com.metrolist.shared.generated.resources.fluvia_value_dp
 import com.metrolist.shared.generated.resources.fluvia_value_percent
-import com.metrolist.shared.generated.resources.fluvia_value_pixels
+import com.metrolist.shared.generated.resources.song_artwork_colors
 import com.metrolist.shared.settings.CornerStyle
 import com.metrolist.shared.settings.DisplaySize
 import com.metrolist.shared.settings.FluviaBackground
@@ -136,7 +138,6 @@ private const val EDGE_MIN = 5
 private const val EDGE_MAX = 100
 private const val PERCENT = 100f
 private const val PERCENT_SIGN = "%"
-private const val HEX_LENGTH = 7
 private const val DISABLED_ALPHA = 0.38f
 private val PreviewIconKeys = listOf("home", "search", "heart", "queue")
 private const val STYLE_PREVIEW_ICON = "heart"
@@ -151,6 +152,8 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
     val tokens = LocalFluviaTokens.current
     // A song's artwork overrides the accent and background colours, so those rows only apply with the switch off.
     val manualColours = !settings.dynamicTheme
+    val manualHint =
+        if (manualColours) null else stringResource(Res.string.fluvia_colours_need_manual, stringResource(Res.string.song_artwork_colors))
 
     val tier = settings.glassTier
     val tierLabel = glassTierLabel(tier)
@@ -172,7 +175,7 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
             min = 0,
             max = BLUR_MAX,
             step = BLUR_STEP,
-            format = { stringResource(Res.string.fluvia_value_pixels, it) },
+            format = { stringResource(Res.string.fluvia_value_dp, it) },
         ) { settings.glassBlur = it }
         glassSlider(
             id = "fluviaGlassTint",
@@ -203,6 +206,9 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
     custom(id = "fluviaAccent", title = accentTitle, enabled = manualColours) { onChanged ->
         Column(Modifier.fillMaxWidth().padding(16.dp)) {
             Text(accentTitle, style = MaterialTheme.typography.bodyLarge)
+            manualHint?.let {
+                Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
             Row(
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -228,6 +234,7 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
         title = stringResource(Res.string.fluvia_accent_custom),
         stored = settings.fluviaAccentHex,
         enabled = manualColours,
+        hint = manualHint,
         adjusted = adjusted,
     ) { settings.fluviaAccentHex = it }
 
@@ -245,6 +252,7 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
         title = stringResource(Res.string.fluvia_background_custom),
         stored = settings.fluviaBackgroundHex,
         enabled = manualColours,
+        hint = manualHint,
         adjusted = adjusted,
     ) { settings.fluviaBackgroundHex = it }
 
@@ -548,6 +556,7 @@ private fun SettingsGroupRegistryBuilder.hexRow(
     title: String,
     stored: String?,
     enabled: Boolean,
+    hint: String?,
     adjusted: Boolean,
     onCommit: (String?) -> Unit,
 ) {
@@ -556,18 +565,25 @@ private fun SettingsGroupRegistryBuilder.hexRow(
     val adjustedMessage = stringResource(Res.string.fluvia_colour_adjusted)
     custom(id = id, title = title, enabled = enabled) { onChanged ->
         var text by remember(stored) { mutableStateOf(stored.orEmpty()) }
-        val invalid = text.isNotBlank() && parseHexColor(text) == null
+        val invalid = text.isNotBlank() && parseHexColor(text.trim()) == null
         Column(Modifier.fillMaxWidth().padding(16.dp)) {
+            hint?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                )
+            }
             OutlinedTextField(
                 value = text,
                 onValueChange = { input ->
-                    if (input.length <= HEX_LENGTH) {
-                        text = input
-                        val cleared = input.isBlank()
-                        val valid = parseHexColor(input) != null
-                        if (cleared) onCommit(null) else if (valid) onCommit(normalizeHex(input))
-                        if (cleared || valid) onChanged()
-                    }
+                    text = input
+                    val trimmed = input.trim()
+                    val cleared = trimmed.isEmpty()
+                    val valid = parseHexColor(trimmed) != null
+                    if (cleared) onCommit(null) else if (valid) onCommit(normalizeHex(trimmed))
+                    if (cleared || valid) onChanged()
                 },
                 label = { Text(title) },
                 placeholder = { Text(example) },

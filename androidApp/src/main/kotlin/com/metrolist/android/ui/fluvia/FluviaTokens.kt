@@ -147,10 +147,12 @@ fun Dp.fluviaSpacing(): Dp = this * LocalFluviaTokens.current.spacingScale
 @ReadOnlyComposable
 fun Dp.fluviaShape(): Dp = this * LocalFluviaTokens.current.shapeScale
 
+private fun Char.isHexDigit(): Boolean = this in '0'..'9' || this in 'a'..'f' || this in 'A'..'F'
+
 /** Accepts `#RRGGBB` or `RRGGBB`; anything else is not a colour. */
 internal fun parseHexColor(hex: String): Color? {
     val digits = hex.trim().removePrefix("#")
-    if (digits.length != HEX_DIGITS) return null
+    if (digits.length != HEX_DIGITS || !digits.all { it.isHexDigit() }) return null
     val rgb = digits.toLongOrNull(HEX_RADIX) ?: return null
     return Color(0xFF000000L or rgb)
 }
