@@ -29,6 +29,43 @@
 >
 > YouTube Music is region-restricted. If the service is unavailable in your region, you need a [VPN or proxy in a supported region](https://one.one.one.one/) to use the app. [Changing your DNS](https://developers.cloudflare.com/1.1.1.1/setup/) can bypass some blocks.
 
+<div align="center">
+<h1><a id="fluvia"></a>Fluvia</h1>
+</div>
+
+Fluvia is an Android-only fork of Metrolist with its own look and deep appearance customisation. It keeps Metrolist's playback, library and sync code, and replaces the upstream UI in place. Fluvia does not track upstream UI changes. The fork lives on the `feat/fluvia-design-system` branch and builds as `io.github.aashisharyan2595.fluvia`.
+
+> [!NOTE]
+> Fluvia is an early build and has only been compiled by CI. It has not been tested on a device. The download links further down point to upstream Metrolist releases, not to Fluvia.
+
+### What the design system adds
+
+- **Looks:** six presets (Midnight Frost, Paper Light, Neon Night, Album Glow, Forest Quiet, Sunset Pop) plus a Custom look. Applying a look sets the accent, background, glass level, corners and fonts together.
+- **Appearance settings:** accent and background colours (including hex entry), glass blur, tint and edge sliders, corner style, spacing density, display size, text scale and icon style.
+- **Glass tiers:** Full, Frosted and Solid, so devices without strong blur support can fall back.
+- **Contrast guard:** text and accent colours are adjusted to keep readable contrast (4.5:1 for text, 3:1 for UI elements), and rows show when a colour was adjusted.
+- **Fonts:** 36 bundled font families, with the Outfit family as the default.
+- **Icon packs:** six packs (Fluvia, Lucide, Feather, Tabler, Phosphor and Material). Licences for icon packs and fonts are listed under About.
+
+### Not built yet
+
+- The glass surface effect (`Modifier.fluviaGlass`) and its backdrop dependency.
+- Background rendering for the Aurora, Mesh, Solid and Album art styles.
+- Applying the spacing scale across screens.
+- Fixes for known gaps: high-contrast support, widgets still gating on Material You, and pure black on dark looks.
+
+### Build the APK
+
+Fork CI builds on GitHub's `ubuntu-latest` runner. In the repository's Actions tab, run **Build Android** with the `debug` variant on the `feat/fluvia-design-system` branch, then download the `android-build` artifact from the run. To build locally, install a JDK and the Android SDK and run `./gradlew :androidApp:assembleDebug`.
+
+The design and plan are in [docs/superpowers/specs](docs/superpowers/specs/2026-11-24-fluvia-design-system-design.md) and [docs/superpowers/plans](docs/superpowers/plans/2026-11-24-fluvia-design-system.md).
+
+### Credit and licence
+
+Fluvia is a fork of [Metrolist](https://github.com/MetrolistGroup/Metrolist) by the Metrolist development team and keeps its GPL-3.0 licence and contributor history. Fluvia is not affiliated with or endorsed by the Metrolist project. The sections below describe upstream Metrolist.
+
+<br>
+
 <!---
 
 DO NOT REMOVE THIS SECTION, I WANT TO ADD IT LATER!!!
@@ -67,6 +104,7 @@ DO NOT REMOVE THIS SECTION, I WANT TO ADD IT LATER!!!
 - Canvas from Apple Music, Spotify and YouTube Music
 - Player, thumbnail, miniplayer and background styles
 - Custom fonts and app icons
+- Fluvia (this fork): Looks presets, glass tiers, 36 fonts and six icon packs on Android
 
 > [!TIP]
 > <p>See the <a href="https://metrolist.cc/#faq">FAQ</a> for common questions.</p>
