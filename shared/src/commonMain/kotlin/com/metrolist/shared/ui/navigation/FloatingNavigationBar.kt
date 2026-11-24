@@ -41,6 +41,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
@@ -67,6 +69,7 @@ internal fun <T> FloatingNavigation(
     itemModifier: @Composable (T) -> Modifier,
     onBarHeightChanged: (Dp) -> Unit,
     modifier: Modifier = Modifier,
+    surfaceModifier: (@Composable (Shape) -> Modifier)? = null,
 ) {
     val density = LocalDensity.current
     AnimatedVisibility(
@@ -89,6 +92,7 @@ internal fun <T> FloatingNavigation(
             onSelect = onSelect,
             separateKey = separateKey,
             itemModifier = itemModifier,
+            surfaceModifier = surfaceModifier,
             modifier =
                 Modifier.onSizeChanged { size ->
                     onBarHeightChanged(with(density) { size.height.toDp() })
@@ -104,8 +108,10 @@ private fun <T> FloatingNavigationBar(
     onSelect: (T) -> Unit,
     separateKey: T?,
     itemModifier: @Composable (T) -> Modifier,
+    surfaceModifier: (@Composable (Shape) -> Modifier)?,
     modifier: Modifier = Modifier,
 ) {
+    val glass = surfaceModifier != null
     val pillItems = items.filter { it.key != separateKey }
     val separateItem = items.firstOrNull { it.key == separateKey }
 
@@ -119,11 +125,15 @@ private fun <T> FloatingNavigationBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Surface(
-            modifier = Modifier.wrapContentWidth().height(FloatingBarHeight),
+            modifier =
+                Modifier
+                    .then(surfaceModifier?.invoke(CircleShape) ?: Modifier)
+                    .wrapContentWidth()
+                    .height(FloatingBarHeight),
             shape = CircleShape,
-            color = MaterialTheme.colorScheme.surfaceContainer,
+            color = if (glass) Color.Transparent else MaterialTheme.colorScheme.surfaceContainer,
             contentColor = MaterialTheme.colorScheme.onSurface,
-            shadowElevation = FloatingBarShadow,
+            shadowElevation = if (glass) 0.dp else FloatingBarShadow,
         ) {
             Row(
                 modifier = Modifier.wrapContentWidth().padding(horizontal = 8.dp),
@@ -144,7 +154,13 @@ private fun <T> FloatingNavigationBar(
         if (separateItem != null) {
             val selected = separateItem.key == selectedKey
             val container by animateColorAsState(
-                if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainer,
+                if (selected) {
+                    MaterialTheme.colorScheme.secondaryContainer
+                } else if (glass) {
+                    Color.Transparent
+                } else {
+                    MaterialTheme.colorScheme.surfaceContainer
+                },
                 label = "floatingSearchContainer",
             )
             val content by animateColorAsState(
@@ -153,11 +169,15 @@ private fun <T> FloatingNavigationBar(
             )
             Surface(
                 onClick = { onSelect(separateItem.key) },
-                modifier = Modifier.size(FloatingBarHeight).then(itemModifier(separateItem.key)),
+                modifier =
+                    Modifier
+                        .then(surfaceModifier?.invoke(CircleShape) ?: Modifier)
+                        .size(FloatingBarHeight)
+                        .then(itemModifier(separateItem.key)),
                 shape = CircleShape,
                 color = container,
                 contentColor = content,
-                shadowElevation = FloatingBarShadow,
+                shadowElevation = if (glass) 0.dp else FloatingBarShadow,
             ) {
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                     Icon(

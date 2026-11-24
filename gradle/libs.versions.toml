@@ -32,6 +32,7 @@ filekit = "0.17.1"
 dbusJava = "5.2.2"
 
 shimmer = "1.5.0"
+backdrop = "2.0.0"
 desugaring = "2.1.5"
 slf4jSimple = "2.1.0-alpha1"
 sqliteJdbc = "3.54.1.0"
@@ -105,6 +106,7 @@ materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "ma
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "shimmer" }
+backdrop = { module = "io.github.kyant0:backdrop", version.ref = "backdrop" }
 
 media3-inspector = { module = "androidx.media3:media3-inspector", version.ref = "media3" }
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }

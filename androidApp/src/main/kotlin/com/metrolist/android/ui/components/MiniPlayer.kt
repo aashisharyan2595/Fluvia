@@ -112,6 +112,8 @@ import coil3.toBitmap
 import com.metrolist.android.LocalListenTogetherManager
 import com.metrolist.android.LocalPlaylistAdder
 import com.metrolist.android.playback.LocalPlayerConnection
+import com.metrolist.android.ui.fluvia.LocalFluviaBackdrop
+import com.metrolist.android.ui.fluvia.fluviaGlass
 import com.metrolist.android.ui.fluvia.fluviaIcon
 import com.metrolist.android.ui.player.MusicVideoSurface
 import com.metrolist.android.ui.theme.PlayerColorExtractor
@@ -659,6 +661,12 @@ internal fun MiniPlayerCard(
         }
     }
     val backgroundColor = if (useSolidBlackMiniPlayer) Color.Black else MaterialTheme.colorScheme.surfaceContainer
+    // Artwork, gradient and black styles paint their own opaque fill, so only the default surface becomes glass.
+    val glass =
+        LocalFluviaBackdrop.current != null &&
+            !useSolidBlackMiniPlayer &&
+            !useGradientMiniPlayer &&
+            !useBlurMiniPlayer
     val contentColor =
         if (useSolidBlackMiniPlayer || useGradientMiniPlayer || useBlurMiniPlayer) Color.White else MaterialTheme.colorScheme.onSurface
     val secondaryContentColor = contentColor.copy(alpha = 0.7f)
@@ -702,7 +710,13 @@ internal fun MiniPlayerCard(
                     translationX = dragOffset.value.x
                     scaleX = animatedScale.value
                     scaleY = animatedScale.value
-                }.clip(RoundedCornerShape(cornerRadius))
+                }.then(
+                    if (glass) {
+                        Modifier.fluviaGlass(RoundedCornerShape(cornerRadius), MaterialTheme.colorScheme.onSurface)
+                    } else {
+                        Modifier
+                    },
+                ).clip(RoundedCornerShape(cornerRadius))
                 .then(if (!isTv && focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
                 .focusProperties { canFocus = !isTv }
                 .testTag("mini_player_card")
@@ -741,10 +755,10 @@ internal fun MiniPlayerCard(
                         }
                 },
         cornerRadius = cornerRadius,
-        elevation = 8.dp,
-        color = backgroundColor,
+        elevation = if (glass) 0.dp else 8.dp,
+        color = if (glass) Color.Transparent else backgroundColor,
         border =
-            if (isModern) {
+            if (isModern && !glass) {
                 BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
             } else {
                 null

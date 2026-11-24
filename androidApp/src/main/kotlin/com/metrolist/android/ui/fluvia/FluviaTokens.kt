@@ -65,10 +65,15 @@ data class FluviaGlass(
     val blur: Dp,
     val tint: Float,
     val edge: Float,
+    /** True when the user set the blur, so a tier downgrade keeps it. */
+    val blurSet: Boolean = false,
+    /** True when the user set the edge, so a tier downgrade keeps it. */
+    val edgeSet: Boolean = false,
 )
 
 @Immutable
 data class FluviaTokens(
+    val dark: Boolean,
     val colors: FluviaColors,
     val glass: FluviaGlass,
     val shapeScale: Float,
@@ -120,6 +125,7 @@ fun rememberFluviaTokens(
         iconStyle,
     ) {
         FluviaTokens(
+            dark = darkTheme,
             colors =
                 buildFluviaColors(
                     dark = darkTheme,
@@ -218,16 +224,18 @@ private fun buildFluviaGlass(
         blur = blur?.dp?.coerceAtLeast(0.dp) ?: defaultBlur(tier),
         tint = tint?.let { (it / PERCENT).coerceIn(0f, 1f) } ?: defaultGlassTint(tier, dark),
         edge = edge?.let { (it / PERCENT).coerceIn(0f, 1f) } ?: defaultEdge(tier, dark),
+        blurSet = blur != null,
+        edgeSet = edge != null,
     )
 
-private fun defaultBlur(tier: GlassTier): Dp =
+internal fun defaultBlur(tier: GlassTier): Dp =
     when (tier) {
         GlassTier.FULL -> 24.dp
         GlassTier.FROSTED -> 40.dp
         GlassTier.SOLID -> 0.dp
     }
 
-private fun defaultEdge(
+internal fun defaultEdge(
     tier: GlassTier,
     dark: Boolean,
 ): Float =

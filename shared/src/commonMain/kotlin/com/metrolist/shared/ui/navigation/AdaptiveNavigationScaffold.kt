@@ -82,6 +82,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
@@ -292,6 +294,7 @@ fun <T> AdaptiveNavigationScaffold(
     floatingSeparateKey: T? = null,
     onFloatingNavigationHeightChanged: (Dp) -> Unit = {},
     onFloatingNavigationOccupiedHeightChanged: (Dp) -> Unit = {},
+    barSurfaceModifier: (@Composable (Shape) -> Modifier)? = null,
     navigationSuiteType: NavigationSuiteType = layout.navigationSuiteType,
     navigationSuiteColors: NavigationSuiteColors = NavigationSuiteDefaults.colors(),
     containerColor: Color = Color.Transparent,
@@ -412,6 +415,7 @@ fun <T> AdaptiveNavigationScaffold(
                                 separateKey = floatingSeparateKey,
                                 itemModifier = itemModifier,
                                 onBarHeightChanged = onFloatingNavigationHeightChanged,
+                                surfaceModifier = barSurfaceModifier,
                             )
                         }
                     }
@@ -425,6 +429,7 @@ fun <T> AdaptiveNavigationScaffold(
                         containerColor = containerColor,
                         itemModifier = itemModifier,
                         navigationSuiteType = navigationSuiteType,
+                        surfaceModifier = barSurfaceModifier,
                     )
                 }
             }
@@ -667,6 +672,7 @@ private fun <T> ColumnScope.SlimNavigationBar(
     containerColor: Color,
     itemModifier: @Composable (T) -> Modifier,
     navigationSuiteType: NavigationSuiteType,
+    surfaceModifier: (@Composable (Shape) -> Modifier)?,
 ) {
     AnimatedVisibility(
         visible = navigationVisible,
@@ -688,6 +694,7 @@ private fun <T> ColumnScope.SlimNavigationBar(
             containerColor = containerColor,
             itemModifier = itemModifier,
             isCompact = navigationSuiteType == NavigationSuiteType.ShortNavigationBarCompact,
+            surfaceModifier = surfaceModifier,
         )
     }
 }
@@ -701,14 +708,17 @@ private fun <T> SlimNavigationBarContent(
     containerColor: Color,
     itemModifier: @Composable (T) -> Modifier,
     isCompact: Boolean,
+    surfaceModifier: (@Composable (Shape) -> Modifier)?,
 ) {
+    // A surface modifier draws the bar background itself (glass), so the plain container colour steps aside.
+    val barColor = if (surfaceModifier != null) Color.Transparent else containerColor
     ShortNavigationBar(
         modifier =
             Modifier
-                .background(containerColor)
+                .then(surfaceModifier?.invoke(RectangleShape) ?: Modifier.background(containerColor))
                 .windowInsetsPadding(ShortNavigationBarDefaults.windowInsets)
                 .height(56.dp),
-        containerColor = containerColor,
+        containerColor = barColor,
         windowInsets = WindowInsets(0),
         arrangement =
             if (isCompact) {
