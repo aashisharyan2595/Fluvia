@@ -475,6 +475,7 @@ dependencies {
 
     implementation(libs.materialKolor)
     implementation(libs.shimmer)
+    implementation(libs.backdrop)
     implementation(libs.compose.reorderable)
 
     implementation(libs.timber)

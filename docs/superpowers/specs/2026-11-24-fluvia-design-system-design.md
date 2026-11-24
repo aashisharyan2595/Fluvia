@@ -81,7 +81,7 @@ New keys in `PreferenceKeys.kt`: look, themeMode, accentIndex, accentHex, backgr
 - Full: backdrop blur plus edge light and lens effect. The blur needs API 31, the lens effect API 33.
 - Frosted: heavy blur with a grainy tint. Works on API 31 and newer.
 - Solid: opaque. Used below API 31, when the system's "remove animations" or reduce-transparency settings are on, and as the contrast fallback.
-- Implementation is chosen by a spike (see open items): Kyant0 Backdrop or Haze.
+- Implementation uses Kyant0 Backdrop 2.0.0 (Apache-2.0, `io.github.kyant0:backdrop`), chosen over Haze after reading its documentation; no on-device spike was run. Its effects work on API 31 and newer, and lens needs API 33 (RuntimeShader). Lens also needs a corner-based shape. The library documents no fallback below API 31, so `fluviaGlass` draws a solid surface there. Android exposes no reduce-transparency setting, so only the Solid tier covers that case. The frosted grain texture is not implemented. Validation on API 31, 33 and 30 devices is still owed.
 
 ### Contrast guard
 
@@ -148,12 +148,12 @@ Built from the prototype's Appearance board: Looks, theme, glass and fine-tune, 
 ## Left to the builder
 
 - Exact Kotlin structure and file split.
-- Which of Backdrop or Haze to use, after the spike.
+- Which of Backdrop or Haze to use: decided, Backdrop 2.0.0.
 - How `FluviaTokens` maps onto Material colour roles where screens still use Material components.
 
 ## Open items (not blocking this slice)
 
-- Spike Kyant0 Backdrop versus Haze for blur and lens effects.
+- Device-check Backdrop blur, lens and frame cost on API 31 and 33 devices, and Solid on API 30.
 - Verify the lock-screen widget `keyguard` category (later slice).
 - Check font and icon licences individually.
 - Check that the name Fluvia is available.

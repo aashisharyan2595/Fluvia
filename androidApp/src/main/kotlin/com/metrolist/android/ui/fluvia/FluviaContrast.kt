@@ -107,7 +107,7 @@ fun defaultGlassTintColor(
         GlassTier.SOLID -> Color.Unspecified
     }
 
-private fun glassSheen(
+internal fun glassSheen(
     tier: GlassTier,
     dark: Boolean,
 ): Float =
