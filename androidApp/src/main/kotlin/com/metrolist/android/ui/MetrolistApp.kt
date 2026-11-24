@@ -420,8 +420,8 @@ fun MetrolistApp(
         onStopOrDispose { }
     }
 
-    val materialYouEnabled = Settings.shared.materialYouEnabled
-    val songArtworkColorsEnabled = materialYouEnabled && Settings.shared.dynamicTheme
+    // FluviaTheme ignores Material You, so the album-art colours switch is the only gate.
+    val songArtworkColorsEnabled = Settings.shared.dynamicTheme
 
     Settings.shared.systemInDarkTheme = isSystemInDarkTheme()
     val darkTheme = Settings.shared.getCurrentThemeIsDark()

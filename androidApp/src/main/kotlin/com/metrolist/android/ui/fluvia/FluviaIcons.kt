@@ -121,7 +121,7 @@ fun fluviaIcon(
     return fluviaIconVector(tokens.iconPackId, key, filled, tokens.iconStyle)
 }
 
-private fun fluviaIconVector(
+internal fun fluviaIconVector(
     packId: String,
     key: String,
     filled: Boolean,
