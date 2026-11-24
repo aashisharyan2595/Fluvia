@@ -136,6 +136,8 @@ data class SharedSettingsHost(
     val refreshablePages: Set<SettingsPageId> = emptySet(),
     val onPageRefresh: (SettingsPageId) -> Unit = {},
     val rememberMetroEqProfilePicker: (@Composable (onPicked: (fileName: String, content: String) -> Unit) -> () -> Unit)? = null,
+    // Theme rows a platform supplies for its own design system. When set, the Appearance screen drops the rows that theme ignores.
+    val extraThemeItems: (@Composable SettingsGroupRegistryBuilder.() -> Unit)? = null,
 )
 
 enum class SettingsControl {
