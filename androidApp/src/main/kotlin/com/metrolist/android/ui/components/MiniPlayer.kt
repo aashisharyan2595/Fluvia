@@ -112,6 +112,7 @@ import coil3.toBitmap
 import com.metrolist.android.LocalListenTogetherManager
 import com.metrolist.android.LocalPlaylistAdder
 import com.metrolist.android.playback.LocalPlayerConnection
+import com.metrolist.android.ui.fluvia.fluviaIcon
 import com.metrolist.android.ui.player.MusicVideoSurface
 import com.metrolist.android.ui.theme.PlayerColorExtractor
 import com.metrolist.shared.constants.MiniPlayerHeight
@@ -1249,8 +1250,8 @@ private fun VintageMiniPlayerContent(
                         when {
                             isListenTogetherGuest && isMuted -> MetrolistIcons.AutoMirrored.Filled.VolumeUp
                             isListenTogetherGuest -> MetrolistIcons.AutoMirrored.Filled.VolumeOff
-                            isPlaying -> MetrolistIcons.Rounded.Pause
-                            else -> MetrolistIcons.Rounded.PlayArrow
+                            isPlaying -> fluviaIcon("pause", filled = true)
+                            else -> fluviaIcon("play", filled = true)
                         },
                     contentDescription =
                         stringResource(
@@ -1281,7 +1282,7 @@ private fun VintageMiniPlayerContent(
             shapes = IconButtonDefaults.shapes(),
         ) {
             Icon(
-                imageVector = MetrolistIcons.Rounded.SkipNext,
+                imageVector = fluviaIcon("next", filled = true),
                 contentDescription = stringResource(Res.string.next),
                 modifier = Modifier.size(28.dp),
             )
@@ -1401,7 +1402,7 @@ private fun PlayButtonWithProgress(
                                 MetrolistIcons.AutoMirrored.Filled.VolumeOff
                             }
                         } else {
-                            MetrolistIcons.Outlined.PlayArrow
+                            fluviaIcon("play", filled = true)
                         },
                     contentDescription = null,
                     tint = Color.White,

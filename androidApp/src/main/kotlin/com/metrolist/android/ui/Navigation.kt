@@ -34,6 +34,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.metrolist.android.ui.fluvia.fluviaIcon
 import com.metrolist.shared.generated.resources.Res
 import com.metrolist.shared.generated.resources.filter_library
 import com.metrolist.shared.generated.resources.home
@@ -106,6 +107,15 @@ val Screen.iconFilled: ImageVector?
             else -> null
         }
 
+private fun Screen.fluviaIconKey(): String? =
+    when (this) {
+        Screen.Home -> "home"
+        Screen.Library -> "library"
+        Screen.Search -> "search"
+        Screen.Settings -> "settings"
+        else -> null
+    }
+
 @Composable
 fun MetrolistNavigationScaffold(
     navigator: Navigator,
@@ -142,12 +152,13 @@ fun MetrolistNavigationScaffold(
     val items =
         screens.mapNotNull { screen ->
             val label = screen.labelRes?.let { stringResource(it) } ?: return@mapNotNull null
-            val icon = screen.icon ?: screen.iconFilled ?: return@mapNotNull null
+            val fluviaKey = screen.fluviaIconKey()
+            val icon = fluviaKey?.let { fluviaIcon(it) } ?: screen.icon ?: screen.iconFilled ?: return@mapNotNull null
             AdaptiveNavigationItem(
                 key = screen,
                 label = label,
                 icon = icon,
-                selectedIcon = screen.iconFilled ?: icon,
+                selectedIcon = fluviaKey?.let { fluviaIcon(it, filled = true) } ?: screen.iconFilled ?: icon,
             )
         }
     val hapticManager = rememberMetrolistHaptics()
