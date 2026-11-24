@@ -156,6 +156,8 @@ import androidx.navigationevent.compose.NavigationEventDispatcherOwnerHostDefaul
 import androidx.navigationevent.compose.rememberNavigationEventDispatcherOwner
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.kyant.backdrop.backdrops.layerBackdrop
+import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import com.metrolist.android.App
 import com.metrolist.android.BuildConfig
 import com.metrolist.android.LocalListenTogetherManager
@@ -195,6 +197,8 @@ import com.metrolist.android.ui.components.shouldUseDesktopCaption
 import com.metrolist.android.ui.components.shouldUseDesktopMiniPlayer
 import com.metrolist.android.ui.fluvia.FluviaBackgroundLayer
 import com.metrolist.android.ui.fluvia.FluviaTheme
+import com.metrolist.android.ui.fluvia.LocalFluviaBackdrop
+import com.metrolist.android.ui.fluvia.LocalFluviaTokens
 import com.metrolist.android.ui.player.AndroidPlayerPlatform
 import com.metrolist.android.ui.player.MusicVideoSurface
 import com.metrolist.android.ui.player.PictureInPictureHelper
@@ -302,6 +306,7 @@ import com.metrolist.shared.playback.LocalPlayerSession
 import com.metrolist.shared.playlistimport.PlaylistImportProgressCard
 import com.metrolist.shared.playlistimport.PlaylistImportStatusManager
 import com.metrolist.shared.scrobble.ScrobbleSessions
+import com.metrolist.shared.settings.GlassTier
 import com.metrolist.shared.settings.MiniPlayerType
 import com.metrolist.shared.settings.Settings
 import com.metrolist.shared.settings.defaultOpenTabRoot
@@ -466,6 +471,17 @@ fun MetrolistApp(
     FluviaTheme(darkTheme = darkTheme, artworkSeed = artworkSeedColor) {
         // Transparent lets the Fluvia background layer show through the inset strips and caption bar.
         val appBackground = if (pureBlack) Color.Black else Color.Transparent
+        // Only the background layer is captured, so glass surfaces never sit inside the layer they sample.
+        val fluviaTokens = LocalFluviaTokens.current
+        val glassBackdrop =
+            rememberLayerBackdrop {
+                drawRect(fluviaTokens.colors.background)
+                drawContent()
+            }
+        val glassBackdropOrNull =
+            glassBackdrop.takeIf {
+                !pureBlack && fluviaTokens.glass.tier != GlassTier.SOLID && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+            }
         val horizontalSystemBars = WindowInsets.navigationBars.union(WindowInsets.displayCutout)
         val playerBackgroundOpaque = MaterialTheme.colorScheme.surfaceContainer.alpha == 1f
         val deviceConnectState by AndroidDeviceConnect.manager.state.collectAsState()
@@ -979,6 +995,7 @@ fun MetrolistApp(
             LocalContextMenuAnchor provides menuAnchor,
             LocalMouseScrollFactors provides rememberMouseScrollFactors(),
             LocalPlaylistAdder provides addToPlaylist,
+            LocalFluviaBackdrop provides glassBackdropOrNull,
         ) {
             val appAccountButton: @Composable (Modifier) -> Unit = { buttonModifier ->
                 val accountName = authManager.accountName
@@ -1046,7 +1063,10 @@ fun MetrolistApp(
                 if (pureBlack) {
                     Box(Modifier.fillMaxSize().background(Color.Black))
                 } else {
-                    FluviaBackgroundLayer(Modifier.fillMaxSize(), artworkUrl = currentSong?.thumbnail)
+                    FluviaBackgroundLayer(
+                        Modifier.fillMaxSize().layerBackdrop(glassBackdrop),
+                        artworkUrl = currentSong?.thumbnail,
+                    )
                 }
                 Column(
                     Modifier

@@ -47,6 +47,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
@@ -344,7 +345,15 @@ fun BottomSheet(
                             ).createOutline(size, layoutDirection, this)
                         }
                     if (morphCollapsedContainer) {
-                        val color = if (style != null) lerp(style.color.copy(alpha = 1f), expandedColor, progress) else expandedColor
+                        val color =
+                            if (style == null) {
+                                expandedColor
+                            } else if (style.color == Color.Transparent) {
+                                // A transparent container (glass) fades in only as the sheet expands.
+                                expandedColor.copy(alpha = progress)
+                            } else {
+                                lerp(style.color.copy(alpha = 1f), expandedColor, progress)
+                            }
                         drawOutline(outline, color)
                     }
                     // The graphicsLayer above already clips to this outline; clipping again doubles the path mask cost.

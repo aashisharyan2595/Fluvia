@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
@@ -34,6 +35,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.metrolist.android.ui.fluvia.LocalFluviaBackdrop
+import com.metrolist.android.ui.fluvia.fluviaGlass
 import com.metrolist.android.ui.fluvia.fluviaIcon
 import com.metrolist.shared.generated.resources.Res
 import com.metrolist.shared.generated.resources.filter_library
@@ -214,6 +217,12 @@ fun MetrolistNavigationScaffold(
             }
         },
         modifier = modifier.background(containerColor),
+        barSurfaceModifier =
+            if (LocalFluviaBackdrop.current != null) {
+                { shape -> Modifier.fluviaGlass(shape, MaterialTheme.colorScheme.onSurface) }
+            } else {
+                null
+            },
         navigationVisible = navigationVisible,
         floatingNavigation = useFloatingNavigation,
         onFloatingNavigationOccupiedHeightChanged = onFloatingNavigationOccupiedHeightChanged,
