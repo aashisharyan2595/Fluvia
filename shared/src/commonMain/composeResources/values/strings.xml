@@ -5678,6 +5678,16 @@
     <string name="wrapped_home_title">Your %1$s Wrapped is here</string>
     <string name="wrapped_home_body">See your year in music and share it.</string>
     <string name="wrapped_home_card_dismissed">You can find your %1$s Wrapped in Statistics until December 31.</string>
+    <!-- Translators: Accessibility label of the seek bar on the Now Playing screen. -->
+    <string name="fluvia_seek_position">Playback position</string>
+    <!-- Translators: Label above the name of the queue or playlist the current song is playing from. -->
+    <string name="fluvia_playing_from">Playing from</string>
+    <!-- Translators: Shown on the Now Playing screen when no song is loaded. -->
+    <string name="fluvia_nothing_playing">Nothing playing</string>
+    <!-- Translators: Title of the switch that selects the Fluvia Now Playing screen. -->
+    <string name="fluvia_now_playing">Fluvia Now Playing</string>
+    <!-- Translators: Description of the switch that selects the Fluvia Now Playing screen. -->
+    <string name="fluvia_now_playing_desc">Show the record player screen with a waveform seek bar when you open the player.</string>
     <!-- Translators: Title of the glass level setting on the Appearance screen. -->
     <string name="fluvia_glass_tier">Glass</string>
     <!-- Translators: Glass level: clear glass with blur. -->

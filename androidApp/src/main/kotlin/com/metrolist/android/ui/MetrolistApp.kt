@@ -200,6 +200,7 @@ import com.metrolist.android.ui.fluvia.FluviaTheme
 import com.metrolist.android.ui.fluvia.LocalFluviaBackdrop
 import com.metrolist.android.ui.fluvia.LocalFluviaTokens
 import com.metrolist.android.ui.fluvia.fluviaGlassActive
+import com.metrolist.android.ui.fluvia.nowplaying.FluviaNowPlaying
 import com.metrolist.android.ui.player.AndroidPlayerPlatform
 import com.metrolist.android.ui.player.MusicVideoSurface
 import com.metrolist.android.ui.player.PictureInPictureHelper
@@ -1981,39 +1982,60 @@ fun MetrolistApp(
                                 },
                             ) {
                                 val playerLifecycleState by lifecycleOwner.lifecycle.currentStateAsState()
-                                PlayerScreen(
-                                    isScreenVisible = playerLifecycleState.isAtLeast(Lifecycle.State.STARTED),
-                                    viewModel = playerViewModel,
-                                    bottomSheetState = playerBottomSheetState,
-                                    requestPlayPauseFocus = focusPlayPauseOnPlayerExpand,
-                                    onPlayPauseFocusRequested = { focusPlayPauseOnPlayerExpand = false },
-                                    onLyricsVisibleChange = { lyricsVisible = it },
-                                    onClose = {
-                                        playerBottomSheetState.collapseSoft()
-                                        if (usesDirectionalNavigation) {
-                                            coroutineScope.launch {
-                                                delay(250.milliseconds)
-                                                runCatching { miniPlayerFocusRequester.requestFocus() }
+                                if (Settings.shared.fluviaNowPlaying) {
+                                    FluviaNowPlaying(
+                                        viewModel = playerViewModel,
+                                        isScreenVisible = playerLifecycleState.isAtLeast(Lifecycle.State.STARTED),
+                                        onLyricsVisibleChange = { lyricsVisible = it },
+                                        onClose = { playerBottomSheetState.collapseSoft() },
+                                        onNavigateToAlbum = { albumId ->
+                                            playerBottomSheetState.collapseSoft()
+                                            navigator.navigate(Screen.Album(albumId))
+                                        },
+                                        onNavigateToArtist = { artistId ->
+                                            playerBottomSheetState.collapseSoft()
+                                            navigator.navigate(Screen.Artist(artistId))
+                                        },
+                                        onNavigateToIntegrations = {
+                                            playerBottomSheetState.collapseSoft()
+                                            navigator.navigate(Screen.Integrations)
+                                        },
+                                    )
+                                } else {
+                                    PlayerScreen(
+                                        isScreenVisible = playerLifecycleState.isAtLeast(Lifecycle.State.STARTED),
+                                        viewModel = playerViewModel,
+                                        bottomSheetState = playerBottomSheetState,
+                                        requestPlayPauseFocus = focusPlayPauseOnPlayerExpand,
+                                        onPlayPauseFocusRequested = { focusPlayPauseOnPlayerExpand = false },
+                                        onLyricsVisibleChange = { lyricsVisible = it },
+                                        onClose = {
+                                            playerBottomSheetState.collapseSoft()
+                                            if (usesDirectionalNavigation) {
+                                                coroutineScope.launch {
+                                                    delay(250.milliseconds)
+                                                    runCatching { miniPlayerFocusRequester.requestFocus() }
+                                                }
                                             }
-                                        }
-                                    },
-                                    onNavigateToAlbum = { albumId ->
-                                        playerBottomSheetState.collapseSoft()
-                                        navigator.navigate(Screen.Album(albumId))
-                                    },
-                                    onNavigateToArtist = { artistId ->
-                                        playerBottomSheetState.collapseSoft()
-                                        navigator.navigate(Screen.Artist(artistId))
-                                    },
-                                    onNavigateToListenTogether = {
-                                        playerBottomSheetState.collapseSoft()
-                                        navigator.navigate(Screen.ListenTogether)
-                                    },
-                                    onNavigateToIntegrations = {
-                                        playerBottomSheetState.collapseSoft()
-                                        navigator.navigate(Screen.Integrations)
-                                    },
-                                )
+                                        },
+                                        onNavigateToAlbum = { albumId ->
+                                            playerBottomSheetState.collapseSoft()
+                                            navigator.navigate(Screen.Album(albumId))
+                                        },
+                                        onNavigateToArtist = { artistId ->
+                                            playerBottomSheetState.collapseSoft()
+                                            navigator.navigate(Screen.Artist(artistId))
+                                        },
+                                        onNavigateToListenTogether = {
+                                            playerBottomSheetState.collapseSoft()
+                                            navigator.navigate(Screen.ListenTogether)
+                                        },
+                                        onNavigateToIntegrations = {
+                                            playerBottomSheetState.collapseSoft()
+                                            navigator.navigate(Screen.Integrations)
+                                        },
+                                    )
+                                }
                             }
                         }
 
