@@ -199,6 +199,7 @@ import com.metrolist.android.ui.fluvia.FluviaBackgroundLayer
 import com.metrolist.android.ui.fluvia.FluviaTheme
 import com.metrolist.android.ui.fluvia.LocalFluviaBackdrop
 import com.metrolist.android.ui.fluvia.LocalFluviaTokens
+import com.metrolist.android.ui.fluvia.fluviaGlassActive
 import com.metrolist.android.ui.player.AndroidPlayerPlatform
 import com.metrolist.android.ui.player.MusicVideoSurface
 import com.metrolist.android.ui.player.PictureInPictureHelper
@@ -306,7 +307,6 @@ import com.metrolist.shared.playback.LocalPlayerSession
 import com.metrolist.shared.playlistimport.PlaylistImportProgressCard
 import com.metrolist.shared.playlistimport.PlaylistImportStatusManager
 import com.metrolist.shared.scrobble.ScrobbleSessions
-import com.metrolist.shared.settings.GlassTier
 import com.metrolist.shared.settings.MiniPlayerType
 import com.metrolist.shared.settings.Settings
 import com.metrolist.shared.settings.defaultOpenTabRoot
@@ -478,10 +478,8 @@ fun MetrolistApp(
                 drawRect(fluviaTokens.colors.background)
                 drawContent()
             }
-        val glassBackdropOrNull =
-            glassBackdrop.takeIf {
-                !pureBlack && fluviaTokens.glass.tier != GlassTier.SOLID && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-            }
+        val glassActive = fluviaGlassActive(fluviaTokens, MaterialTheme.colorScheme.onSurface, pureBlack)
+        val glassBackdropOrNull = glassBackdrop.takeIf { glassActive }
         val horizontalSystemBars = WindowInsets.navigationBars.union(WindowInsets.displayCutout)
         val playerBackgroundOpaque = MaterialTheme.colorScheme.surfaceContainer.alpha == 1f
         val deviceConnectState by AndroidDeviceConnect.manager.state.collectAsState()
@@ -1064,7 +1062,7 @@ fun MetrolistApp(
                     Box(Modifier.fillMaxSize().background(Color.Black))
                 } else {
                     FluviaBackgroundLayer(
-                        Modifier.fillMaxSize().layerBackdrop(glassBackdrop),
+                        Modifier.fillMaxSize().then(if (glassActive) Modifier.layerBackdrop(glassBackdrop) else Modifier),
                         artworkUrl = currentSong?.thumbnail,
                     )
                 }

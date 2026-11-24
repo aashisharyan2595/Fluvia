@@ -91,20 +91,7 @@ fun Modifier.fluviaGlass(
         val colors = tokens.colors
         val dark = tokens.dark
         val requested = tokens.glass.tier
-        val canBlur = backdrop != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-        val guarded =
-            if (requested == GlassTier.SOLID || !canBlur) {
-                GlassResult(GlassTier.SOLID, 1f)
-            } else {
-                guardGlass(
-                    tier = requested,
-                    startTint = tokens.glass.tint,
-                    dark = dark,
-                    text = text,
-                    backdrop = colors.background,
-                    surfaceTint = defaultGlassTintColor(requested, dark),
-                )
-            }
+        val guarded = resolveGlass(tokens, backdrop != null, text)
         val tier = guarded.tier
         val edgeAlpha =
             if (tokens.glass.edgeSet || tier == requested) tokens.glass.edge else defaultEdge(tier, dark)
@@ -140,6 +127,37 @@ fun Modifier.fluviaGlass(
                 ).drawEdge(shape, Color.White.copy(alpha = edgeAlpha))
         }
     }
+
+private fun resolveGlass(
+    tokens: FluviaTokens,
+    hasBackdrop: Boolean,
+    text: Color,
+): GlassResult {
+    val requested = tokens.glass.tier
+    val canBlur = hasBackdrop && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    return if (requested == GlassTier.SOLID || !canBlur) {
+        GlassResult(GlassTier.SOLID, 1f)
+    } else {
+        guardGlass(
+            tier = requested,
+            startTint = tokens.glass.tint,
+            dark = tokens.dark,
+            text = text,
+            backdrop = tokens.colors.background,
+            surfaceTint = defaultGlassTintColor(requested, tokens.dark),
+        )
+    }
+}
+
+/**
+ * True when glass surfaces holding [text] render as real glass: the tier is not Solid after [guardGlass], the API level
+ * can blur, and the theme is not pure black. [fluviaGlass] resolves through the same function, so the two cannot disagree.
+ */
+internal fun fluviaGlassActive(
+    tokens: FluviaTokens,
+    text: Color,
+    pureBlack: Boolean,
+): Boolean = !pureBlack && resolveGlass(tokens, hasBackdrop = true, text = text).tier != GlassTier.SOLID
 
 /** Lens refraction height in px, or 0 when the lens does not apply (tier, API level or shape). */
 private fun lensHeightPx(

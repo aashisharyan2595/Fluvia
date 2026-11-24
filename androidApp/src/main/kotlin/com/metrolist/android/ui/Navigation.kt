@@ -21,6 +21,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
@@ -200,6 +201,15 @@ fun MetrolistNavigationScaffold(
             Modifier
         }
 
+    val glassBackdrop = LocalFluviaBackdrop.current
+    val onSurfaceColor = MaterialTheme.colorScheme.onSurface
+    val barSurfaceModifier =
+        remember(glassBackdrop, onSurfaceColor) {
+            glassBackdrop?.let {
+                val surface: @Composable (Shape) -> Modifier = { shape -> Modifier.fluviaGlass(shape, onSurfaceColor) }
+                surface
+            }
+        }
     AdaptiveNavigationScaffold(
         layout = adaptiveLayout,
         items = items,
@@ -217,12 +227,7 @@ fun MetrolistNavigationScaffold(
             }
         },
         modifier = modifier.background(containerColor),
-        barSurfaceModifier =
-            if (LocalFluviaBackdrop.current != null) {
-                { shape -> Modifier.fluviaGlass(shape, MaterialTheme.colorScheme.onSurface) }
-            } else {
-                null
-            },
+        barSurfaceModifier = barSurfaceModifier,
         navigationVisible = navigationVisible,
         floatingNavigation = useFloatingNavigation,
         onFloatingNavigationOccupiedHeightChanged = onFloatingNavigationOccupiedHeightChanged,
