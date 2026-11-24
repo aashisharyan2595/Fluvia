@@ -464,7 +464,8 @@ fun MetrolistApp(
             .value
             .takeIf { songArtworkColorsEnabled }
     FluviaTheme(darkTheme = darkTheme, artworkSeed = artworkSeedColor) {
-        val appBackground = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface
+        // Transparent lets the Fluvia background layer show through the inset strips and caption bar.
+        val appBackground = if (pureBlack) Color.Black else Color.Transparent
         val horizontalSystemBars = WindowInsets.navigationBars.union(WindowInsets.displayCutout)
         val playerBackgroundOpaque = MaterialTheme.colorScheme.surfaceContainer.alpha == 1f
         val deviceConnectState by AndroidDeviceConnect.manager.state.collectAsState()
@@ -1055,8 +1056,8 @@ fun MetrolistApp(
                         .drawBehind {
                             val left = horizontalSystemBars.getLeft(this, layoutDirection).toFloat()
                             val right = horizontalSystemBars.getRight(this, layoutDirection).toFloat()
-                            if (left > 0f) drawRect(appBackground, size = Size(left, size.height))
-                            if (right > 0f) drawRect(appBackground, topLeft = Offset(size.width - right, 0f), size = Size(right, size.height))
+                            if (left > 0f && pureBlack) drawRect(appBackground, size = Size(left, size.height))
+                            if (right > 0f && pureBlack) drawRect(appBackground, topLeft = Offset(size.width - right, 0f), size = Size(right, size.height))
                         },
                 ) {
                     DesktopCaptionBar(

@@ -47,7 +47,7 @@ private data class Blob(
 /**
  * Fills its bounds with the background style from the Appearance settings. [artworkUrl] is the current song's artwork
  * and is only used by [FluviaBackground.ALBUM_ART]; without it, or below API 31 where blur is unavailable, that style
- * draws the aurora, whose colours already follow the artwork seed through the accent token.
+ * draws the aurora, whose colours come from the accent token (the artwork seed only when song-artwork colours are enabled).
  */
 @Composable
 fun FluviaBackgroundLayer(
@@ -73,7 +73,7 @@ fun FluviaBackgroundLayer(
             Box(modifier.clipToBounds()) {
                 AsyncImage(
                     url = artworkUrl,
-                    modifier = Modifier.fillMaxSize().blur(ARTWORK_BLUR_DP.dp, BlurredEdgeTreatment.Unbounded),
+                    modifier = Modifier.fillMaxSize().blur(ARTWORK_BLUR_DP.dp, BlurredEdgeTreatment.Rectangle),
                     contentScale = ContentScale.Crop,
                 )
                 // Neutral scrim keeps text legible over any artwork.
