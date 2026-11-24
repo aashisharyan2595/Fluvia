@@ -28,19 +28,25 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.metrolist.android.ui.fluvia.FluviaIconPacks
-import com.metrolist.android.ui.fluvia.IconPackData
 import com.metrolist.shared.generated.resources.Res
 import com.metrolist.shared.generated.resources.close
+import com.metrolist.shared.generated.resources.credits_fonts_title
 import com.metrolist.shared.generated.resources.credits_icon_pack_entry
 import com.metrolist.shared.generated.resources.credits_icon_packs_title
 import org.jetbrains.compose.resources.stringResource
 
 private const val FLUVIA_PACK_ID = "fluvia"
+private const val FONT_LICENSES_PATH = "files/licenses/fonts/LICENSES.md"
 
-/** Licence rows for the bundled third-party icon packs; each opens the pack's full licence text. */
+private data class LicenseDialog(
+    val title: String,
+    val path: String,
+)
+
+/** Licence rows for the bundled third-party icon packs and fonts; each opens its full licence text. */
 @Composable
 fun ColumnScope.IconPackCredits() {
-    var selected by remember { mutableStateOf<IconPackData?>(null) }
+    var dialog by remember { mutableStateOf<LicenseDialog?>(null) }
 
     Text(
         text = stringResource(Res.string.credits_icon_packs_title),
@@ -48,8 +54,9 @@ fun ColumnScope.IconPackCredits() {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     FluviaIconPacks.filter { it.id != FLUVIA_PACK_ID }.forEach { pack ->
+        val packTitle = stringResource(Res.string.credits_icon_pack_entry, pack.label, pack.licence)
         Text(
-            text = stringResource(Res.string.credits_icon_pack_entry, pack.label, pack.licence),
+            text = packTitle,
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -57,18 +64,37 @@ fun ColumnScope.IconPackCredits() {
                 Modifier
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.medium)
-                    .clickable(role = Role.Button) { selected = pack }
+                    .clickable(role = Role.Button) {
+                        dialog =
+                            LicenseDialog(
+                                title = packTitle,
+                                path = "files/licenses/icon-packs/${pack.id}/LICENSE",
+                            )
+                    }
                     .padding(12.dp),
         )
     }
+    val fontsTitle = stringResource(Res.string.credits_fonts_title)
+    Text(
+        text = fontsTitle,
+        style = MaterialTheme.typography.bodyMedium,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.medium)
+                .clickable(role = Role.Button) { dialog = LicenseDialog(fontsTitle, FONT_LICENSES_PATH) }
+                .padding(12.dp),
+    )
 
-    selected?.let { pack ->
-        val licenseText by produceState<String?>(null, pack.id) {
-            value = runCatching { Res.readBytes("files/licenses/icon-packs/${pack.id}/LICENSE").decodeToString() }.getOrNull()
+    dialog?.let { current ->
+        val licenseText by produceState<String?>(null, current.path) {
+            value = runCatching { Res.readBytes(current.path).decodeToString() }.getOrNull()
         }
         AlertDialog(
-            onDismissRequest = { selected = null },
-            title = { Text(stringResource(Res.string.credits_icon_pack_entry, pack.label, pack.licence)) },
+            onDismissRequest = { dialog = null },
+            title = { Text(current.title) },
             text = {
                 Text(
                     text = licenseText.orEmpty(),
@@ -78,7 +104,7 @@ fun ColumnScope.IconPackCredits() {
                 )
             },
             confirmButton = {
-                TextButton(onClick = { selected = null }) { Text(stringResource(Res.string.close)) }
+                TextButton(onClick = { dialog = null }) { Text(stringResource(Res.string.close)) }
             },
         )
     }

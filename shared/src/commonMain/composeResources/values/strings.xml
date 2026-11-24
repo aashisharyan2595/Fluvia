@@ -5791,4 +5791,6 @@
     <string name="fluvia_icon_style_soft">Soft</string>
     <!-- Translators: Icon style. -->
     <string name="fluvia_icon_style_duo">Duo</string>
+    <!-- Translators: Row in the About screen that opens the licences of the bundled fonts. -->
+    <string name="credits_fonts_title">Fonts</string>
 </resources>
