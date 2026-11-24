@@ -1,42 +1,36 @@
-<div style="display: flex; gap: 1rem;">
-  <img src="fastlane/metadata/android/en-US/images/icon.png" alt="Metrolist app icon" width="200" height="200" />
-  <div>
-      <h1>Metrolist</h1>
-      <h3>A Material Design YouTube Music client for Android, iOS and desktop</h3>
-      <div style="display: flex; gap: 1rem;">
-        <a href="https://github.com/MetrolistGroup/Metrolist/releases"><img src="https://img.shields.io/github/v/release/MetrolistGroup/Metrolist?style=for-the-badge&labelColor=0d1117" alt="Latest release" /></a>
-        <a href="https://github.com/MetrolistGroup/Metrolist/blob/main/LICENSE"><img src="https://img.shields.io/github/license/MetrolistGroup/metrolist?style=for-the-badge&labelColor=0d1117" alt="License" /></a>
-        <a href="https://github.com/MetrolistGroup/Metrolist/releases"><img src="https://img.shields.io/github/downloads/MetrolistGroup/Metrolist/total?style=for-the-badge&labelColor=0d1117" alt="Downloads" /></a>
-      </div>
-  </div>
-</div>
+<div align="center">
 
-<br>
+<h1>Fluvia</h1>
+<h3>A customisable, glass-styled YouTube Music client for Android</h3>
 
-<div style="display: flex; gap: 0.5rem; align-items: center;">
-  <a href="https://www.blacksmith.sh"><img src="assets/blacksmith-powered.svg" alt="CI powered by Blacksmith" height="32" /></a>
-  <a href="https://dsc.gg/metrolist"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" height="32" /></a>
-  <a href="https://t.me/metrolistapp"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram" height="32" /></a>
+<p>
+  <a href="https://github.com/aashisharyan2595/Fluvia/blob/main/LICENSE"><img src="https://img.shields.io/github/license/aashisharyan2595/Fluvia?style=for-the-badge&labelColor=0d1117" alt="License" /></a>
+  <a href="https://github.com/aashisharyan2595/Fluvia/commits"><img src="https://img.shields.io/github/last-commit/aashisharyan2595/Fluvia?style=for-the-badge&labelColor=0d1117" alt="Last commit" /></a>
+  <a href="https://aashishpandey.com"><img src="https://img.shields.io/badge/Website-aashishpandey.com-5865F2?style=for-the-badge&labelColor=0d1117" alt="aashishpandey.com" /></a>
+</p>
+
+<p>Made by <a href="https://aashishpandey.com">Aashish Pandey</a> · a fork of <a href="https://github.com/MetrolistGroup/Metrolist">Metrolist</a></p>
+
 </div>
 
 <br>
 
 > [!WARNING]
 > <details>
->   <summary>The use of Metrolist to access YouTube Music may violate YouTube's Terms of Service.</summary>
->   <p>You use Metrolist at your own risk. You are solely responsible for any consequences. Metrolist's contributors are not liable for damages, claims or actions against your account. We have received no reports of bans or restrictions for using Metrolist, but that does not guarantee your account's safety.</p>
+>   <summary>Using Fluvia to access YouTube Music may violate YouTube's Terms of Service.</summary>
+>   <p>You use Fluvia at your own risk and are solely responsible for any consequences, including action against your account. The maintainer is not liable for damages, claims or actions against your account.</p>
 > </details>
 >
-> YouTube Music is region-restricted. If the service is unavailable in your region, you need a [VPN or proxy in a supported region](https://one.one.one.one/) to use the app. [Changing your DNS](https://developers.cloudflare.com/1.1.1.1/setup/) can bypass some blocks.
+> YouTube Music is region-restricted. If the service is unavailable in your region, you need a [VPN or proxy in a supported region](https://one.one.one.one/) to use the app.
+
+> [!NOTE]
+> Fluvia is an early build. CI compiles it, but it has not been tested on a device.
 
 <div align="center">
-<h1><a id="fluvia"></a>Fluvia</h1>
+<h1><a id="about-fluvia"></a>About Fluvia</h1>
 </div>
 
 Fluvia is an Android-only fork of Metrolist with its own look and deep appearance customisation. It keeps Metrolist's playback, library and sync code, and replaces the upstream UI in place. Fluvia does not track upstream UI changes. The fork lives on the `feat/fluvia-design-system` branch and builds as `io.github.aashisharyan2595.fluvia`. Made by [Aashish Pandey](https://aashishpandey.com).
-
-> [!NOTE]
-> Fluvia is an early build and has only been compiled by CI. It has not been tested on a device. The download links further down point to upstream Metrolist releases, not to Fluvia.
 
 ### What the design system adds
 
@@ -59,22 +53,6 @@ Fluvia is an Android-only fork of Metrolist with its own look and deep appearanc
 Fork CI builds on GitHub's `ubuntu-latest` runner. In the repository's Actions tab, run **Build Android** with the `debug` variant on the `feat/fluvia-design-system` branch, then download the `android-build` artifact from the run. To build locally, install a JDK and the Android SDK and run `./gradlew :androidApp:assembleDebug`.
 
 The design and plan are in [docs/superpowers/specs](docs/superpowers/specs/2026-11-24-fluvia-design-system-design.md) and [docs/superpowers/plans](docs/superpowers/plans/2026-11-24-fluvia-design-system.md).
-
-### Credits
-
-- **Metrolist:** Fluvia is a fork of [Metrolist](https://github.com/MetrolistGroup/Metrolist) by [the Metrolist development team](https://github.com/MetrolistGroup). Playback, library, sync, lyrics and Listen Together come from upstream, and contributor history is preserved in git.
-- **Upstream projects and services:** [MusicRecognizer](https://github.com/aleksey-saenko/MusicRecognizer) (Shazam recognition), [InnerTubeX](https://github.com/MetrolistGroup/innertubex) (YouTube streaming engine, built with help from [ZemerTeam](https://github.com/ZemerTeam/)), Lyprio (lyrics), [metroserver](https://github.com/MetrolistGroup/metroserver) (Listen Together backend) and translators on [Weblate](https://hosted.weblate.org/projects/Metrolist/).
-- **Icon packs:** [Lucide](https://lucide.dev) (ISC, Lucide Icons and Contributors), [Feather](https://feathericons.com) (MIT, Cole Bemis), [Tabler Icons](https://tabler.io/icons) (MIT, Paweł Kuna), [Phosphor](https://phosphoricons.com) (MIT, Phosphor Icons) and [Material Symbols](https://fonts.google.com/icons) (Apache-2.0, Google). The Fluvia pack is original to Metrolist under GPL-3.0. Versions and licence texts are in [the icon pack notices](shared/src/commonMain/composeResources/files/licenses/icon-packs/NOTICE.md).
-- **Fonts:** 36 families from Google Fonts, bundled unmodified under SIL OFL 1.1 through the `@expo-google-fonts` packages. Each copyright line is in [the font licences](shared/src/commonMain/composeResources/files/licenses/fonts/LICENSES.md).
-- **Design and build:** Fluvia's design system was planned and written with Claude (Anthropic) and directed by [Aashish Pandey](https://aashishpandey.com).
-
-### Disclaimer
-
-Fluvia is an independent fork. It is not affiliated with, funded, authorized or endorsed by the Metrolist project, YouTube, Google LLC, or their affiliates. Fluvia is not a registered trademark, and the name may change.
-
-Using Fluvia to access YouTube Music may violate YouTube's Terms of Service. You use it at your own risk and are solely responsible for any consequences, including action against your account. The maintainer is not liable for damages or claims. YouTube Music is region-restricted, so you may need a VPN or proxy in a supported region.
-
-All trademarks, service marks and intellectual property referenced here belong to their owners. Icon and font licences apply to those assets, and Fluvia's own code stays under GPL-3.0. The sections below describe upstream Metrolist, including its own credits and disclaimer.
 
 <br>
 
@@ -100,9 +78,11 @@ DO NOT REMOVE THIS SECTION, I WANT TO ADD IT LATER!!!
 <h1>Features</h1>
 </div>
 
+Fluvia adds the appearance features at the end of this list. Everything else is inherited from Metrolist, and some of it, such as iOS and desktop support, is not part of Fluvia.
+
 - YouTube Music playback with or without signing in
 - Android 7+, iOS 15+, Windows 10+, macOS 15+ and Linux support
-- Material 3 Expressive design
+- Material 3 Expressive base, being replaced by the Fluvia design system
 - Discord Rich Presence and scrobbling through Last.fm and ListenBrainz
 - No ads
 - Listen Together for shared playback online
@@ -116,7 +96,7 @@ DO NOT REMOVE THIS SECTION, I WANT TO ADD IT LATER!!!
 - Canvas from Apple Music, Spotify and YouTube Music
 - Player, thumbnail, miniplayer and background styles
 - Custom fonts and app icons
-- Fluvia (this fork): Looks presets, glass tiers, 36 fonts and six icon packs on Android
+- **Fluvia:** Looks presets, glass tiers, contrast guard, 36 fonts and six icon packs on Android
 
 > [!TIP]
 > <p>See the <a href="https://metrolist.cc/#faq">FAQ</a> for common questions.</p>
@@ -125,7 +105,12 @@ DO NOT REMOVE THIS SECTION, I WANT TO ADD IT LATER!!!
 
 <div align="center">
 
-<h1><a id="download-now"></a>Download now</h1>
+<h1><a id="download-now"></a>Download Fluvia</h1>
+
+<p>Fluvia has no published releases yet. To get an APK, open <a href="https://github.com/aashisharyan2595/Fluvia/actions/workflows/build-android.yml">Actions, Build Android</a>, choose <b>Run workflow</b> with the <code>debug</code> variant, then download the <code>android-build</code> artifact from the finished run. See <a href="#about-fluvia">About Fluvia</a> for local builds.</p>
+
+<details>
+<summary>Upstream Metrolist downloads (not Fluvia)</summary>
 
 <p>Setup guides: <a href="docs/install/android.md">Android</a> · <a href="docs/install/ios.md">iOS</a> · <a href="docs/install/windows.md">Windows</a> · <a href="docs/install/macos.md">macOS</a> · <a href="docs/install/linux.md">Linux</a></p>
 
@@ -207,15 +192,17 @@ brew install --cask metrolistgroup/tap/metrolist
 brew install metrolistgroup/tap/metrolist
 ```
 
+</details>
+
 </div>
 
 <br>
 
 <div align="center">
 
-<h1><a id="support-the-project"></a>Support the project</h1>
+<h1><a id="support-the-project"></a>Support upstream Metrolist</h1>
 
-Metrolist is free and open-source. Donations support its development.
+Fluvia is built on Metrolist, which is free and open-source. These links support the Metrolist developers, not Fluvia.
 
 <p>
   <a href="https://github.com/sponsors/nyxiereal">
@@ -289,7 +276,7 @@ Metrolist uses these projects and services.
 
 <div align="center">
 
-<h1><a id="translations"></a>Translations</h1>
+<h1><a id="translations"></a>Metrolist translations</h1>
 
 [![Translation status](https://img.shields.io/weblate/progress/metrolist?style=for-the-badge&labelColor=0d1117)](https://hosted.weblate.org/engage/metrolist/)
 
@@ -303,12 +290,36 @@ Metrolist uses these projects and services.
 <br>
 
 <div align="center">
-<h1>Contributors</h1>
+<h1>Metrolist contributors</h1>
 <p>To contribute code, start with the <a href="docs/README.md">developer docs</a>.</p>
 <a href="https://github.com/MetrolistGroup/Metrolist/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=MetrolistGroup/Metrolist" alt="Contributors" />
 </a>
 </div>
+
+<br>
+
+<div align="center">
+<h1><a id="fluvia-credits"></a>Fluvia credits</h1>
+</div>
+
+
+- **Metrolist:** Fluvia is a fork of [Metrolist](https://github.com/MetrolistGroup/Metrolist) by [the Metrolist development team](https://github.com/MetrolistGroup). Playback, library, sync, lyrics and Listen Together come from upstream, and contributor history is preserved in git.
+- **Upstream projects and services:** [MusicRecognizer](https://github.com/aleksey-saenko/MusicRecognizer) (Shazam recognition), [InnerTubeX](https://github.com/MetrolistGroup/innertubex) (YouTube streaming engine, built with help from [ZemerTeam](https://github.com/ZemerTeam/)), Lyprio (lyrics), [metroserver](https://github.com/MetrolistGroup/metroserver) (Listen Together backend) and translators on [Weblate](https://hosted.weblate.org/projects/Metrolist/).
+- **Icon packs:** [Lucide](https://lucide.dev) (ISC, Lucide Icons and Contributors), [Feather](https://feathericons.com) (MIT, Cole Bemis), [Tabler Icons](https://tabler.io/icons) (MIT, Paweł Kuna), [Phosphor](https://phosphoricons.com) (MIT, Phosphor Icons) and [Material Symbols](https://fonts.google.com/icons) (Apache-2.0, Google). The Fluvia pack is original to Metrolist under GPL-3.0. Versions and licence texts are in [the icon pack notices](shared/src/commonMain/composeResources/files/licenses/icon-packs/NOTICE.md).
+- **Fonts:** 36 families from Google Fonts, bundled unmodified under SIL OFL 1.1 through the `@expo-google-fonts` packages. Each copyright line is in [the font licences](shared/src/commonMain/composeResources/files/licenses/fonts/LICENSES.md).
+- **Design and build:** Fluvia's design system was planned and written with Claude (Anthropic) and directed by [Aashish Pandey](https://aashishpandey.com).
+
+<div align="center">
+<h1><a id="fluvia-disclaimer"></a>Fluvia disclaimer</h1>
+</div>
+
+
+Fluvia is an independent fork. It is not affiliated with, funded, authorized or endorsed by the Metrolist project, YouTube, Google LLC, or their affiliates. Fluvia is not a registered trademark, and the name may change.
+
+Using Fluvia to access YouTube Music may violate YouTube's Terms of Service. You use it at your own risk and are solely responsible for any consequences, including action against your account. The maintainer is not liable for damages or claims. YouTube Music is region-restricted, so you may need a VPN or proxy in a supported region.
+
+All trademarks, service marks and intellectual property referenced here belong to their owners. Icon and font licences apply to those assets, and Fluvia's own code stays under GPL-3.0. Upstream Metrolist has its own credits and disclaimer, kept in the sections around this one.
 
 <br>
 
@@ -322,8 +333,8 @@ Metrolist uses these projects and services.
 
 <div align="center">
 
-**Developed by [the Metrolist development team](https://github.com/MetrolistGroup)**
+**Fluvia by [Aashish Pandey](https://aashishpandey.com)**
 
-**This project stands with Palestine 🇵🇸**
+**Based on [Metrolist](https://github.com/MetrolistGroup/Metrolist) by [the Metrolist development team](https://github.com/MetrolistGroup)**
 
 </div>
