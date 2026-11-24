@@ -60,9 +60,21 @@ Fork CI builds on GitHub's `ubuntu-latest` runner. In the repository's Actions t
 
 The design and plan are in [docs/superpowers/specs](docs/superpowers/specs/2026-11-24-fluvia-design-system-design.md) and [docs/superpowers/plans](docs/superpowers/plans/2026-11-24-fluvia-design-system.md).
 
-### Credit and licence
+### Credits
 
-Fluvia is a fork of [Metrolist](https://github.com/MetrolistGroup/Metrolist) by the Metrolist development team and keeps its GPL-3.0 licence and contributor history. Fluvia is not affiliated with or endorsed by the Metrolist project. The sections below describe upstream Metrolist.
+- **Metrolist:** Fluvia is a fork of [Metrolist](https://github.com/MetrolistGroup/Metrolist) by [the Metrolist development team](https://github.com/MetrolistGroup). Playback, library, sync, lyrics and Listen Together come from upstream, and contributor history is preserved in git.
+- **Upstream projects and services:** [MusicRecognizer](https://github.com/aleksey-saenko/MusicRecognizer) (Shazam recognition), [InnerTubeX](https://github.com/MetrolistGroup/innertubex) (YouTube streaming engine, built with help from [ZemerTeam](https://github.com/ZemerTeam/)), Lyprio (lyrics), [metroserver](https://github.com/MetrolistGroup/metroserver) (Listen Together backend) and translators on [Weblate](https://hosted.weblate.org/projects/Metrolist/).
+- **Icon packs:** [Lucide](https://lucide.dev) (ISC, Lucide Icons and Contributors), [Feather](https://feathericons.com) (MIT, Cole Bemis), [Tabler Icons](https://tabler.io/icons) (MIT, Paweł Kuna), [Phosphor](https://phosphoricons.com) (MIT, Phosphor Icons) and [Material Symbols](https://fonts.google.com/icons) (Apache-2.0, Google). The Fluvia pack is original to Metrolist under GPL-3.0. Versions and licence texts are in [the icon pack notices](shared/src/commonMain/composeResources/files/licenses/icon-packs/NOTICE.md).
+- **Fonts:** 36 families from Google Fonts, bundled unmodified under SIL OFL 1.1 through the `@expo-google-fonts` packages. Each copyright line is in [the font licences](shared/src/commonMain/composeResources/files/licenses/fonts/LICENSES.md).
+- **Design and build:** Fluvia's design system was planned and written with Claude (Anthropic) and directed by Aashish Pandey.
+
+### Disclaimer
+
+Fluvia is an independent fork. It is not affiliated with, funded, authorized or endorsed by the Metrolist project, YouTube, Google LLC, or their affiliates. Fluvia is not a registered trademark, and the name may change.
+
+Using Fluvia to access YouTube Music may violate YouTube's Terms of Service. You use it at your own risk and are solely responsible for any consequences, including action against your account. The maintainer is not liable for damages or claims. YouTube Music is region-restricted, so you may need a VPN or proxy in a supported region.
+
+All trademarks, service marks and intellectual property referenced here belong to their owners. Icon and font licences apply to those assets, and Fluvia's own code stays under GPL-3.0. The sections below describe upstream Metrolist, including its own credits and disclaimer.
 
 <br>
 
