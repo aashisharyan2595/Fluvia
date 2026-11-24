@@ -5724,6 +5724,7 @@
     <string name="fluvia_accent_custom">Custom accent colour</string>
     <!-- Translators: Title of the custom background colour field. -->
     <string name="fluvia_background_custom">Custom background colour</string>
+    <!-- Translators: Example colour code shown in the hex field error. Do not translate. -->
     <string name="fluvia_hex_example" translatable="false">#FF5A5F</string>
     <!-- Translators: Error under a colour field. %1$s is an example colour code. -->
     <string name="fluvia_hex_invalid">Use a 6-digit hex code like %1$s</string>
@@ -5799,24 +5800,31 @@
     <string name="fluvia_looks_description">A Look sets theme, glass, colours, corners, font and icons together. Change any option below and it becomes Custom.</string>
     <!-- Translators: Name of a Look (dark theme, frosted glass, violet accent). Proper noun, may be translated. -->
     <string name="fluvia_look_midnight_frost">Midnight Frost</string>
+    <!-- Translators: One-line description shown under the Looks row while the Midnight Frost Look is selected. -->
     <string name="fluvia_look_midnight_frost_description">Dark with frosted glass and a violet accent.</string>
     <!-- Translators: Name of a Look (light theme, clear glass, coral accent). -->
     <string name="fluvia_look_paper_light">Paper Light</string>
+    <!-- Translators: One-line description shown under the Looks row while the Paper Light Look is selected. -->
     <string name="fluvia_look_paper_light_description">Bright and clean with clear glass and thin line icons.</string>
     <!-- Translators: Name of a Look (dark theme, mesh background, pink accent). -->
     <string name="fluvia_look_neon_night">Neon Night</string>
+    <!-- Translators: One-line description shown under the Looks row while the Neon Night Look is selected. -->
     <string name="fluvia_look_neon_night_description">Dark with a pink mesh glow and two-tone icons.</string>
     <!-- Translators: Name of a Look that takes its colours from the playing song's artwork. -->
     <string name="fluvia_look_album_glow">Album Glow</string>
+    <!-- Translators: One-line description shown under the Looks row while the Album Glow Look is selected. -->
     <string name="fluvia_look_album_glow_description">Colours and background follow the artwork of the song that is playing.</string>
     <!-- Translators: Name of a Look (dark green, solid surfaces, sharp corners). -->
     <string name="fluvia_look_forest_quiet">Forest Quiet</string>
+    <!-- Translators: One-line description shown under the Looks row while the Forest Quiet Look is selected. -->
     <string name="fluvia_look_forest_quiet_description">Solid surfaces, sharp corners and a teal accent. No glass effects.</string>
     <!-- Translators: Name of a Look (light theme, frosted glass, amber accent, pill corners). -->
     <string name="fluvia_look_sunset_pop">Sunset Pop</string>
+    <!-- Translators: One-line description shown under the Looks row while the Sunset Pop Look is selected. -->
     <string name="fluvia_look_sunset_pop_description">Light and warm with frosted glass, pill corners and a serif font.</string>
     <!-- Translators: Chip shown in the Looks row when the options no longer match any Look. -->
     <string name="fluvia_look_custom">Custom</string>
+    <!-- Translators: Description shown under the Looks row while the options no longer match any Look. -->
     <string name="fluvia_look_custom_description">Your own mix of options. Pick a Look to start from one.</string>
     <!-- Translators: Row in the About screen that opens the licences of the bundled fonts. -->
     <string name="credits_fonts_title">Fonts</string>

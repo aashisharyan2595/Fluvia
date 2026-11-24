@@ -1,6 +1,15 @@
 # Fluvia design system and Appearance settings
 
-Status: draft v2 for approval (revised: replace the Metrolist theme, do not layer on it). Nothing in this document is built yet.
+Status: tasks 1, 2, 3, 5, 6, 7 and 8 are implemented on branch `feat/fluvia-design-system` as local commits. Nothing has been compiled yet; CI is the first build. Task 4 (glass surface) is not implemented: the provisional choice is Kyant0 Backdrop 2.0.0 (Apache-2.0), picked from search results because its docs were unreachable, with Haze rejected because its v2 glass module is alpha; device validation is pending.
+
+Known gaps that need follow-up tasks:
+
+- The glass settings have no consumer yet. Background style rendering (aurora, mesh, solid, album art) and the spacing scale are also unused: `fluviaSpacing` and `fluviaShape` have no callers.
+- The system high-contrast setting (`UiModeManager` contrast, API 34+) was honoured by the old theme and is not carried over.
+- Widgets still gate on `materialYouEnabled && dynamicTheme`.
+- The Look tile backdrops (Plum, Forest, Blush, Ink) are not applied as backgrounds, because no real setting models them.
+- `PURE_BLACK` is overwritten by dark Looks.
+- Album-art colours default to on and dim the accent rows.
 
 ## Intent
 

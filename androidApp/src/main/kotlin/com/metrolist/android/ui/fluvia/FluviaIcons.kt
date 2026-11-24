@@ -159,8 +159,11 @@ private fun buildIcon(
     if (shifted) builder.addGroup(translationY = -owner.minY)
 
     when {
-        !owner.stroke -> builder.addPath(pathData = nodes, fill = black)
-        filled ->
+        !owner.stroke -> {
+            builder.addPath(pathData = nodes, fill = black)
+        }
+
+        filled -> {
             builder.addPath(
                 pathData = nodes,
                 pathFillType = PathFillType.NonZero,
@@ -170,6 +173,8 @@ private fun buildIcon(
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round,
             )
+        }
+
         else -> {
             val line = style == IconStyle.LINE
             builder.addPath(

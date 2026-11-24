@@ -33,7 +33,10 @@ import com.metrolist.shared.generated.resources.close
 import com.metrolist.shared.generated.resources.credits_fonts_title
 import com.metrolist.shared.generated.resources.credits_icon_pack_entry
 import com.metrolist.shared.generated.resources.credits_icon_packs_title
+import com.metrolist.shared.generated.resources.error_occurred
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
+import kotlin.coroutines.cancellation.CancellationException
 
 private const val FLUVIA_PACK_ID = "fluvia"
 private const val FONT_LICENSES_PATH = "files/licenses/fonts/LICENSES.md"
@@ -44,6 +47,7 @@ private data class LicenseDialog(
 )
 
 /** Licence rows for the bundled third-party icon packs and fonts; each opens its full licence text. */
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ColumnScope.IconPackCredits() {
     var dialog by remember { mutableStateOf<LicenseDialog?>(null) }
@@ -89,15 +93,23 @@ fun ColumnScope.IconPackCredits() {
     )
 
     dialog?.let { current ->
-        val licenseText by produceState<String?>(null, current.path) {
-            value = runCatching { Res.readBytes(current.path).decodeToString() }.getOrNull()
+        val license by produceState<Result<String>?>(null, current.path) {
+            value =
+                try {
+                    Result.success(Res.readBytes(current.path).decodeToString())
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Result.failure(e)
+                }
         }
+        val failedText = stringResource(Res.string.error_occurred)
         AlertDialog(
             onDismissRequest = { dialog = null },
             title = { Text(current.title) },
             text = {
                 Text(
-                    text = licenseText.orEmpty(),
+                    text = license?.let { it.getOrNull() ?: failedText }.orEmpty(),
                     style = MaterialTheme.typography.bodySmall,
                     fontFamily = FontFamily.Monospace,
                     modifier = Modifier.verticalScroll(rememberScrollState()),

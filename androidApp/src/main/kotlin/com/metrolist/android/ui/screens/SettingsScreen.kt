@@ -334,7 +334,6 @@ fun SettingsScreen(
 
     val availablePages =
         buildSet {
-            add(SettingsPageId.FONTS)
             add(SettingsPageId.PLAYER_STYLE)
             add(SettingsPageId.PLAYER_ARTWORK)
             add(SettingsPageId.MINI_PLAYER_STYLE)

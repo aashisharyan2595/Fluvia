@@ -3,6 +3,8 @@
  * Licensed under GPL-3.0 | See git history for contributors
  */
 
+@file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
+
 package com.metrolist.android.ui.fluvia
 
 import android.graphics.drawable.ColorDrawable
@@ -51,7 +53,6 @@ private const val OUTLINE_ALPHA = 0.5f
  * Applies the Fluvia tokens to Material 3. Dynamic colour and the palette style are ignored; the accent comes from the
  * Fluvia settings, or from [artworkSeed] when the caller supplies one.
  */
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun FluviaTheme(
     darkTheme: Boolean,

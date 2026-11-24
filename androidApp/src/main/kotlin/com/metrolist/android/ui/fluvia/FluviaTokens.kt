@@ -169,16 +169,22 @@ internal fun buildFluviaColors(
 
     val background =
         when {
-            artworkSeed != null ->
+            artworkSeed != null -> {
                 lerp(
                     if (dark) DarkBase else LightBase,
                     accentRaw,
                     if (dark) DARK_ARTWORK_BACKGROUND_MIX else LIGHT_ARTWORK_BACKGROUND_MIX,
                 )
-            customBackground != null ->
+            }
+
+            customBackground != null -> {
                 // Contrast is symmetric, so fitting the background against the text moves it towards black or white.
                 fitTextColor(customBackground, text, if (dark) Color.Black else Color.White, MIN_TEXT_CONTRAST)
-            else -> if (dark) DarkBase else LightBase
+            }
+
+            else -> {
+                if (dark) DarkBase else LightBase
+            }
         }
     val customAccentInUse = artworkSeed == null && customAccent != null
     // Presets and artwork colours are fills and controls, so they only need the non-text ratio; a custom hex is held to text contrast.

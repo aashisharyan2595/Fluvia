@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -47,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -130,6 +132,7 @@ import com.metrolist.shared.generated.resources.fluvia_spacing_compact
 import com.metrolist.shared.generated.resources.fluvia_spacing_spacious
 import com.metrolist.shared.generated.resources.fluvia_value_dp
 import com.metrolist.shared.generated.resources.fluvia_value_percent
+import com.metrolist.shared.generated.resources.percent_symbol
 import com.metrolist.shared.generated.resources.song_artwork_colors
 import com.metrolist.shared.settings.CornerStyle
 import com.metrolist.shared.settings.DisplaySize
@@ -150,7 +153,6 @@ private const val TINT_MAX = 85
 private const val EDGE_MIN = 5
 private const val EDGE_MAX = 100
 private const val PERCENT = 100f
-private const val PERCENT_SIGN = "%"
 private const val DISABLED_ALPHA = 0.38f
 private val PreviewIconKeys = listOf("home", "search", "heart", "queue")
 private const val STYLE_PREVIEW_ICON = "heart"
@@ -200,7 +202,7 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
             min = 0,
             max = TINT_MAX,
             step = 1,
-            format = { stringResource(Res.string.fluvia_value_percent, it, PERCENT_SIGN) },
+            format = { stringResource(Res.string.fluvia_value_percent, it, stringResource(Res.string.percent_symbol)) },
         ) { settings.glassTint = it }
         glassSlider(
             id = "fluviaGlassEdge",
@@ -210,7 +212,7 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
             min = EDGE_MIN,
             max = EDGE_MAX,
             step = 1,
-            format = { stringResource(Res.string.fluvia_value_percent, it, PERCENT_SIGN) },
+            format = { stringResource(Res.string.fluvia_value_percent, it, stringResource(Res.string.percent_symbol)) },
         ) { settings.glassEdge = it }
     }
 
@@ -397,20 +399,26 @@ private fun SettingsGroupRegistryBuilder.looksRow() {
                     Modifier
                         .fillMaxWidth()
                         .horizontalScroll(rememberScrollState())
+                        .selectableGroup()
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 FluviaLookPresets.forEach { preset ->
                     val name = stringResource(preset.name)
-                    LookTile(name = name, selected = selected == preset.look, onClick = {
-                        applyLook(preset.look)
-                        onChanged()
-                    }) { LookPreview(preset) }
+                    LookTile(
+                        name = name,
+                        selected = selected == preset.look,
+                        onClick = {
+                            applyLook(preset.look)
+                            onChanged()
+                        },
+                    ) { LookPreview(preset) }
                 }
                 // Custom is a state, not a preset: choosing it keeps the settings as they are.
                 LookTile(
                     name = stringResource(Res.string.fluvia_look_custom),
                     selected = selected == FluviaLook.CUSTOM,
+                    enabled = false,
                     onClick = {},
                 ) { CustomPreview() }
             }
@@ -430,13 +438,14 @@ private fun LookTile(
     name: String,
     selected: Boolean,
     onClick: () -> Unit,
+    enabled: Boolean = true,
     preview: @Composable () -> Unit,
 ) {
     Column(
         modifier =
             Modifier
                 .width(112.dp)
-                .selectable(selected = selected, role = Role.RadioButton, onClick = onClick),
+                .selectable(selected = selected, enabled = enabled, role = Role.RadioButton, onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
@@ -471,7 +480,7 @@ private fun LookPreview(preset: FluviaLookPreset) {
             style = MaterialTheme.typography.titleMedium,
             fontFamily = fluviaFont(preset.fontId).family,
             color = ink,
-            modifier = Modifier.padding(start = 12.dp, top = 8.dp),
+            modifier = Modifier.padding(start = 12.dp, top = 8.dp).clearAndSetSemantics {},
         )
         Box(
             Modifier
@@ -503,6 +512,7 @@ private fun CustomPreview() {
             text = "Aa",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.clearAndSetSemantics {},
         )
     }
 }
