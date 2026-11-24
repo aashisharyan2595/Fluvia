@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Fluvia">
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0C1B"/><stop offset="1" stop-color="#1B1D3A"/>
+    </linearGradient>
+    <linearGradient id="flow" gradientUnits="userSpaceOnUse" x1="200" y1="150" x2="340" y2="390">
+      <stop offset="0" stop-color="#F0E5D0"/><stop offset="0.55" stop-color="#F6C88E"/><stop offset="1" stop-color="#F1AA55"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.34"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.85"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.12"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.45"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <path d="M256 74 C 256 74 128 206 128 312 C 128 382 185 438 256 438 C 327 438 384 382 384 312 C 384 206 256 74 256 74 Z" fill="url(#glass)" stroke="url(#rim)" stroke-width="4"/>
+  <path d="M176 270 C 180 222 206 184 238 150" fill="none" stroke="#fff" stroke-opacity="0.55" stroke-width="10" stroke-linecap="round"/>
+  <g fill="none" stroke="url(#flow)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="190" y1="300" x2="190" y2="372"/><line x1="223" y1="250" x2="223" y2="372"/><line x1="256" y1="214" x2="256" y2="372"/><line x1="289" y1="262" x2="289" y2="372"/><line x1="322" y1="312" x2="322" y2="372"/>
+    
+  </g>
+</svg>

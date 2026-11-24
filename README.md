@@ -1,6 +1,10 @@
 <div align="center">
 
-<h1>Fluvia</h1>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/fluvia/fluvia-logo-dark.svg">
+  <img src="assets/fluvia/fluvia-logo-light.svg" alt="Fluvia" height="120">
+</picture>
+
 <h3>A customisable, glass-styled YouTube Music client for Android</h3>
 
 <p>
