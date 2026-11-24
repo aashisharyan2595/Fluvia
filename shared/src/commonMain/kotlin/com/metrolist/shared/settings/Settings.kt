@@ -93,6 +93,7 @@ import com.metrolist.shared.constants.FluviaAccentHexKey
 import com.metrolist.shared.constants.FluviaAccentIndexKey
 import com.metrolist.shared.constants.FluviaBackgroundHexKey
 import com.metrolist.shared.constants.FluviaBackgroundKey
+import com.metrolist.shared.constants.FluviaDockKey
 import com.metrolist.shared.constants.FluviaFontKey
 import com.metrolist.shared.constants.FluviaLookKey
 import com.metrolist.shared.constants.ForceBottomNavBarKey
@@ -372,6 +373,7 @@ class Settings(
     var iconPack by preference(IconPackKey, "fluvia")
     var iconStyle by preference(IconStyleKey, IconStyle.SOFT)
     var fluviaLook by preference(FluviaLookKey, FluviaLook.CUSTOM)
+    var fluviaDock by preference(FluviaDockKey, true)
     var matugenTheme by preference(MatugenThemeKey, false)
 
     var appFont by preference(FontOption.SYSTEM)

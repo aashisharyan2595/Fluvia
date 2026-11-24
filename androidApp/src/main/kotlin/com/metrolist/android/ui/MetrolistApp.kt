@@ -200,6 +200,7 @@ import com.metrolist.android.ui.fluvia.FluviaTheme
 import com.metrolist.android.ui.fluvia.LocalFluviaBackdrop
 import com.metrolist.android.ui.fluvia.LocalFluviaTokens
 import com.metrolist.android.ui.fluvia.fluviaGlassActive
+import com.metrolist.android.ui.fluvia.rememberFluviaDock
 import com.metrolist.android.ui.player.AndroidPlayerPlatform
 import com.metrolist.android.ui.player.MusicVideoSurface
 import com.metrolist.android.ui.player.PictureInPictureHelper
@@ -834,8 +835,9 @@ fun MetrolistApp(
             }
         val useNavigationRail = !navigationSuiteType.isNavigationBar
         // Hiding navigation must not move the retained lookahead tree between scaffolds.
+        val fluviaDock = rememberFluviaDock(useDesktopMiniPlayer)
         val useFloatingNavBar =
-            Settings.shared.floatingNavBar && !useDesktopUi && !usesDirectionalNavigation &&
+            (Settings.shared.floatingNavBar || fluviaDock) && !useDesktopUi && !usesDirectionalNavigation &&
                 navigationSuiteType.isNavigationBar
         val isImeVisible = WindowInsets.ime.asPaddingValues().calculateBottomPadding() > 0.dp
         val shouldHideMiniPlayerForIme = isLandscape && isImeVisible
@@ -891,8 +893,8 @@ fun MetrolistApp(
                 label = "navigationVisibility",
             )
         val hasBottomNavigation = navigationSuiteType.isNavigationBar
-        val isExpressiveMiniPlayer = Settings.shared.miniPlayerType == MiniPlayerType.EXPRESSIVE && !useDesktopMiniPlayer
-        val isModernMiniPlayer = Settings.shared.miniPlayerType == MiniPlayerType.MODERN && !useDesktopMiniPlayer
+        val isExpressiveMiniPlayer = !fluviaDock && Settings.shared.miniPlayerType == MiniPlayerType.EXPRESSIVE && !useDesktopMiniPlayer
+        val isModernMiniPlayer = fluviaDock || (Settings.shared.miniPlayerType == MiniPlayerType.MODERN && !useDesktopMiniPlayer)
         val miniPlayerBottomSpacing =
             when {
                 isExpressiveMiniPlayer -> ModernMiniPlayerBottomSpacing
