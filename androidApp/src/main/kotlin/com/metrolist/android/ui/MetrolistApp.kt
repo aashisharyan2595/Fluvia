@@ -193,6 +193,7 @@ import com.metrolist.android.ui.components.calculateMiniPlayerInsets
 import com.metrolist.android.ui.components.calculateNavigationContentInset
 import com.metrolist.android.ui.components.shouldUseDesktopCaption
 import com.metrolist.android.ui.components.shouldUseDesktopMiniPlayer
+import com.metrolist.android.ui.fluvia.FluviaTheme
 import com.metrolist.android.ui.player.AndroidPlayerPlatform
 import com.metrolist.android.ui.player.MusicVideoSurface
 import com.metrolist.android.ui.player.PictureInPictureHelper
@@ -232,7 +233,6 @@ import com.metrolist.android.ui.screens.settings.StatsScreen
 import com.metrolist.android.ui.screens.settings.StorageSettingsScreen
 import com.metrolist.android.ui.screens.settings.UpdateDetailsScreen
 import com.metrolist.android.ui.screens.settings.UpdatesScreen
-import com.metrolist.android.ui.theme.MetrolistTheme
 import com.metrolist.android.ui.utils.appBarScrollBehavior
 import com.metrolist.android.ui.utils.resetHeightOffset
 import com.metrolist.android.update.AppUpdateManager
@@ -367,7 +367,6 @@ import com.metrolist.shared.ui.screens.SupportPrompt
 import com.metrolist.shared.ui.screens.pageKey
 import com.metrolist.shared.ui.screens.toHomeSection
 import com.metrolist.shared.ui.settings.SettingsPageId
-import com.metrolist.shared.ui.theme.resolveThemeSeedColor
 import com.metrolist.shared.ui.tv.tvFocusHighlight
 import com.metrolist.shared.ui.utils.LocalMouseScrollFactors
 import com.metrolist.shared.utils.BlockScreenshots
@@ -410,7 +409,6 @@ fun MetrolistApp(
     onExitApp: () -> Unit = {},
     onIncomingIntentConsumed: (Intent) -> Unit = {},
 ) {
-    val hasDynamicColorSdk = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val context = LocalContext.current
     val directionToNavigationRail = if (LocalLayoutDirection.current == LayoutDirection.Ltr) FocusDirection.Left else FocusDirection.Right
     val stopPlaybackLabel = stringResource(Res.string.menu_stop)
@@ -464,18 +462,7 @@ fun MetrolistApp(
             .collectAsState()
             .value
             .takeIf { songArtworkColorsEnabled }
-    MetrolistTheme(
-        darkTheme = darkTheme,
-        dynamicColor = materialYouEnabled && hasDynamicColorSdk && artworkSeedColor == null,
-        themeColor =
-            resolveThemeSeedColor(
-                materialYouEnabled = materialYouEnabled,
-                songArtworkColorsEnabled = songArtworkColorsEnabled,
-                selectedThemeColor = Settings.shared.selectedThemeColor,
-                artworkSeedColor = artworkSeedColor,
-            ),
-        pureBlack = pureBlack,
-    ) {
+    FluviaTheme(darkTheme = darkTheme, artworkSeed = artworkSeedColor) {
         val appBackground = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surface
         val horizontalSystemBars = WindowInsets.navigationBars.union(WindowInsets.displayCutout)
         val playerBackgroundOpaque = MaterialTheme.colorScheme.surfaceContainer.alpha == 1f
