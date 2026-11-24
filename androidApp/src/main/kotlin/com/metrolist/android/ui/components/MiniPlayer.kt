@@ -112,9 +112,11 @@ import coil3.toBitmap
 import com.metrolist.android.LocalListenTogetherManager
 import com.metrolist.android.LocalPlaylistAdder
 import com.metrolist.android.playback.LocalPlayerConnection
+import com.metrolist.android.ui.fluvia.FluviaMiniPlayerContent
 import com.metrolist.android.ui.fluvia.LocalFluviaBackdrop
 import com.metrolist.android.ui.fluvia.fluviaGlass
 import com.metrolist.android.ui.fluvia.fluviaIcon
+import com.metrolist.android.ui.fluvia.rememberFluviaDock
 import com.metrolist.android.ui.player.MusicVideoSurface
 import com.metrolist.android.ui.theme.PlayerColorExtractor
 import com.metrolist.shared.constants.MiniPlayerHeight
@@ -209,8 +211,9 @@ fun MiniPlayer(
     val isLive = currentSong?.isLive == true || playbackResource?.isLive == true
     val lifecycleState by LocalLifecycleOwner.current.lifecycle.currentStateAsState()
     val miniPlayerActive = bottomSheetState?.isCollapsed != false && lifecycleState == Lifecycle.State.RESUMED
-    val isExpressiveMiniPlayer = Settings.shared.miniPlayerType == MiniPlayerType.EXPRESSIVE && !useDesktopLayout
-    val isModern = Settings.shared.miniPlayerType == MiniPlayerType.MODERN && !useDesktopLayout
+    val fluviaDock = rememberFluviaDock(useDesktopLayout)
+    val isExpressiveMiniPlayer = !fluviaDock && Settings.shared.miniPlayerType == MiniPlayerType.EXPRESSIVE && !useDesktopLayout
+    val isModern = fluviaDock || (Settings.shared.miniPlayerType == MiniPlayerType.MODERN && !useDesktopLayout)
     val expressiveProgressEnabled = isExpressiveMiniPlayer && Settings.shared.showExpressiveMiniPlayerProgress
     val progressActive = miniPlayerActive && (!isExpressiveMiniPlayer || expressiveProgressEnabled) && !useDesktopLayout && !isLive
     var progressWidthPx by remember { mutableIntStateOf(0) }
@@ -675,7 +678,9 @@ internal fun MiniPlayerCard(
     val isFocused by interactionSource.collectIsFocusedAsState()
     val isPressed by interactionSource.collectIsPressedAsState()
 
-    val miniPlayerType = Settings.shared.miniPlayerType
+    val fluviaDock = rememberFluviaDock(useDesktopLayout)
+    // The Fluvia dock uses the Modern mini player's geometry.
+    val miniPlayerType = if (fluviaDock) MiniPlayerType.MODERN else Settings.shared.miniPlayerType
     val isModern = miniPlayerType == MiniPlayerType.MODERN && !useDesktopLayout
 
     val animatedScale =
@@ -997,6 +1002,23 @@ private fun MiniPlayerContent(
                     contentColor = secondaryContentColor,
                 )
             },
+        )
+    } else if (miniPlayerType == MiniPlayerType.MODERN && rememberFluviaDock(useDesktopLayout)) {
+        FluviaMiniPlayerContent(
+            modifier = modifier,
+            metadataModifier = metadataModifier,
+            marqueeModifier = marqueeModifier,
+            title = currentSong.title,
+            artist = currentSong.artists.joinToString { it.displayName }.takeIf { it.isNotBlank() } ?: stringResource(Res.string.unknown),
+            artworkUrl = artworkUrl,
+            isPlaying = isPlaying,
+            isPlaybackLoading = isPlaybackLoading,
+            progress = progress,
+            isListenTogetherGuest = isListenTogetherGuest,
+            isMuted = isMuted,
+            canSkipNext = canSkipNext,
+            onTogglePlayPause = onTogglePlayPause,
+            onSkipNext = onSkipNext,
         )
     } else if (miniPlayerType == MiniPlayerType.MODERN) {
         ModernMiniPlayerContent(

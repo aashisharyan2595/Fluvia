@@ -96,6 +96,8 @@ import com.metrolist.shared.generated.resources.fluvia_display_size_medium
 import com.metrolist.shared.generated.resources.fluvia_display_size_note
 import com.metrolist.shared.generated.resources.fluvia_display_size_small
 import com.metrolist.shared.generated.resources.fluvia_display_size_xs
+import com.metrolist.shared.generated.resources.fluvia_dock
+import com.metrolist.shared.generated.resources.fluvia_dock_desc
 import com.metrolist.shared.generated.resources.fluvia_font
 import com.metrolist.shared.generated.resources.fluvia_font_group_display
 import com.metrolist.shared.generated.resources.fluvia_font_group_handwriting
@@ -171,6 +173,13 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
         if (manualColours) null else stringResource(Res.string.fluvia_colours_need_manual, stringResource(Res.string.song_artwork_colors))
 
     looksRow()
+
+    switch(
+        id = "fluviaDock",
+        title = stringResource(Res.string.fluvia_dock),
+        description = stringResource(Res.string.fluvia_dock_desc),
+        checked = settings.fluviaDock,
+    ) { settings.fluviaDock = it }
 
     val tier = settings.glassTier
     val tierLabel = glassTierLabel(tier)
