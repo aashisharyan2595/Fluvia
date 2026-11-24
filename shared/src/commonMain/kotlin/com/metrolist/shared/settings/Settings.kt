@@ -56,6 +56,7 @@ import com.metrolist.shared.constants.CastEnabledKey
 import com.metrolist.shared.constants.CastVolumeStepKey
 import com.metrolist.shared.constants.ClassicRecommendationsKey
 import com.metrolist.shared.constants.CollectionCoversKey
+import com.metrolist.shared.constants.CornerStyleKey
 import com.metrolist.shared.constants.DatabaseLikesRecoveryVersionKey
 import com.metrolist.shared.constants.DefaultOpenTabKey
 import com.metrolist.shared.constants.DeletedPlaylistIdsJsonKey
@@ -72,6 +73,7 @@ import com.metrolist.shared.constants.DevtoolsUnlockedKey
 import com.metrolist.shared.constants.DisableAnimatedArtworkOnMobileDataKey
 import com.metrolist.shared.constants.DiscordAlbumTemplateKey
 import com.metrolist.shared.constants.DiscordPendingAuthSessionKey
+import com.metrolist.shared.constants.DisplaySizeKey
 import com.metrolist.shared.constants.DownloadQueueJsonKey
 import com.metrolist.shared.constants.DownloadedCollectionSortDirectionKey
 import com.metrolist.shared.constants.DownloadedCollectionSortKey
@@ -87,9 +89,19 @@ import com.metrolist.shared.constants.ExpressiveMiniPlayerCookieArtworkKey
 import com.metrolist.shared.constants.ExpressiveMiniPlayerShapeMotionKey
 import com.metrolist.shared.constants.FloatingNavBarKey
 import com.metrolist.shared.constants.FloatingTopBarKey
+import com.metrolist.shared.constants.FluviaAccentHexKey
+import com.metrolist.shared.constants.FluviaAccentIndexKey
+import com.metrolist.shared.constants.FluviaBackgroundHexKey
+import com.metrolist.shared.constants.FluviaBackgroundKey
+import com.metrolist.shared.constants.FluviaFontKey
+import com.metrolist.shared.constants.FluviaLookKey
 import com.metrolist.shared.constants.ForceBottomNavBarKey
 import com.metrolist.shared.constants.GitHubNTransformConfigUrlKey
 import com.metrolist.shared.constants.GitHubNTransformEnabledKey
+import com.metrolist.shared.constants.GlassBlurKey
+import com.metrolist.shared.constants.GlassEdgeKey
+import com.metrolist.shared.constants.GlassTierKey
+import com.metrolist.shared.constants.GlassTintKey
 import com.metrolist.shared.constants.GlobalLyricsOffsetMsKey
 import com.metrolist.shared.constants.GridItemSizeKey
 import com.metrolist.shared.constants.HasNewUploadsKey
@@ -100,6 +112,8 @@ import com.metrolist.shared.constants.HideNonMusicalVideosKey
 import com.metrolist.shared.constants.HideRecentSearchesKey
 import com.metrolist.shared.constants.HideShortSongsKey
 import com.metrolist.shared.constants.HistoryPlaylistsEnabledKey
+import com.metrolist.shared.constants.IconPackKey
+import com.metrolist.shared.constants.IconStyleKey
 import com.metrolist.shared.constants.IosCustomFontFileKey
 import com.metrolist.shared.constants.IosCustomFontNameKey
 import com.metrolist.shared.constants.IosCustomFontRevisionKey
@@ -188,6 +202,7 @@ import com.metrolist.shared.constants.SleepTimerDefaultMinutesKey
 import com.metrolist.shared.constants.SliderTrackThicknessDpKey
 import com.metrolist.shared.constants.SlimNavBarKey
 import com.metrolist.shared.constants.SongShareLinkKey
+import com.metrolist.shared.constants.SpacingDensityKey
 import com.metrolist.shared.constants.SpeedDialArtworkRefreshTimesKey
 import com.metrolist.shared.constants.SpeedDialSurprisePinnedKey
 import com.metrolist.shared.constants.SponsorBlockEnabledKey
@@ -342,6 +357,21 @@ class Settings(
     var autoPureBlack by preference(AutoPureBlackKey, false)
     var selectedThemeColor by preference(0L)
     var themePaletteStyle by preference(ThemePaletteStyle.TONAL_SPOT)
+    var glassTier by preference(GlassTierKey, GlassTier.FULL)
+    var glassBlur by nullableIntPreference(GlassBlurKey)
+    var glassTint by nullableIntPreference(GlassTintKey)
+    var glassEdge by nullableIntPreference(GlassEdgeKey)
+    var cornerStyle by preference(CornerStyleKey, CornerStyle.SOFT)
+    var spacingDensity by preference(SpacingDensityKey, SpacingDensity.COMFORTABLE)
+    var displaySize by preference(DisplaySizeKey, DisplaySize.MEDIUM)
+    var fluviaBackground by preference(FluviaBackgroundKey, FluviaBackground.AURORA)
+    var fluviaBackgroundHex by nullableStringPreference(FluviaBackgroundHexKey)
+    var fluviaAccentIndex by preference(FluviaAccentIndexKey, 0)
+    var fluviaAccentHex by nullableStringPreference(FluviaAccentHexKey)
+    var fluviaFont by preference(FluviaFontKey, "outfit")
+    var iconPack by preference(IconPackKey, "fluvia")
+    var iconStyle by preference(IconStyleKey, IconStyle.SOFT)
+    var fluviaLook by preference(FluviaLookKey, FluviaLook.CUSTOM)
     var matugenTheme by preference(MatugenThemeKey, false)
 
     var appFont by preference(FontOption.SYSTEM)
@@ -1000,6 +1030,25 @@ class Settings(
         defaultValue: String,
     ) = preference(key, defaultValue, SettingType.STRING, settings::get, settings::set)
 
+    // Null means automatic; removing the key keeps it out of backups instead of storing a sentinel.
+    private fun nullableIntPreference(key: String) =
+        preference<Int?>(
+            key,
+            null,
+            SettingType.INT,
+            { name, _ -> settings.getIntOrNull(name) },
+            { name, value -> if (value == null) settings.remove(name) else settings.putInt(name, value) },
+        )
+
+    private fun nullableStringPreference(key: String) =
+        preference<String?>(
+            key,
+            null,
+            SettingType.STRING,
+            { name, _ -> settings.getStringOrNull(name) },
+            { name, value -> if (value == null) settings.remove(name) else settings.putString(name, value) },
+        )
+
     private fun preference(defaultValue: Boolean) = preference(null, defaultValue)
 
     private fun preference(
@@ -1137,7 +1186,7 @@ class Settings(
         validatePortableSettings(backup)
         val normalized =
             backup.copy(entries = backup.entries.map { it.copy(value = normalizeLegacyStringSetting(it.key, it.value)) })
-        importSettings(normalized, backupExcludedKeys, backupCredentialKeys + ArtistNameAliasesJsonKey)
+        importSettings(normalized, backupExcludedKeys, backupCredentialKeys + ArtistNameAliasesJsonKey + nullablePreferenceKeys)
     }
 
     fun restoreBackupSettingsSnapshot(snapshot: PortableSettings) {
@@ -1422,6 +1471,10 @@ class Settings(
                     AutoBackupLastSuccessEpochKey,
                 )
         private val backupExcludedKeys = nonPortableKeys - backupCredentialKeys
+
+        // Absent means automatic, so a backup without these keys must clear any value already on the device.
+        private val nullablePreferenceKeys =
+            setOf(GlassBlurKey, GlassTintKey, GlassEdgeKey, FluviaBackgroundHexKey, FluviaAccentHexKey)
         private const val PORTABLE_SETTINGS_VERSION = 1
         const val DEFAULT_LISTEN_TOGETHER_SERVER_URL = "wss://metroserverx.meowery.eu/ws"
         const val DEFAULT_FARADAY_PLAYER_CONFIG_URL =

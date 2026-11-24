@@ -768,6 +768,10 @@
     <string name="credits_license_name">License</string>
     <!-- Translators: Supporting text beneath the credits license option in the About screen. -->
     <string name="credits_license_desc">Metrolist is licensed under GPL-3.0</string>
+    <!-- Translators: Section title above the licences of the bundled icon packs in the About screen. -->
+    <string name="credits_icon_packs_title">Icon packs</string>
+    <!-- Translators: Row in the About screen naming an icon pack and its licence. %1$s is the pack name; %2$s is the licence identifier. -->
+    <string name="credits_icon_pack_entry" translatable="false">%1$s · %2$s</string>
     <!-- Translators: Confirmation prompt for wanna play favorite song; retained for translation compatibility but not currently referenced by app code. -->
     <!-- Translators: Message explaining yeah; retained for translation compatibility but not currently referenced by app code. -->
     <!-- Translators: Label for credits collaborators section in the About screen. -->
@@ -5674,4 +5678,154 @@
     <string name="wrapped_home_title">Your %1$s Wrapped is here</string>
     <string name="wrapped_home_body">See your year in music and share it.</string>
     <string name="wrapped_home_card_dismissed">You can find your %1$s Wrapped in Statistics until December 31.</string>
+    <!-- Translators: Title of the glass level setting on the Appearance screen. -->
+    <string name="fluvia_glass_tier">Glass</string>
+    <!-- Translators: Glass level: clear glass with blur. -->
+    <string name="fluvia_glass_full">Full</string>
+    <!-- Translators: Glass level: heavily blurred, milky glass. -->
+    <string name="fluvia_glass_frosted">Frosted</string>
+    <!-- Translators: Glass level: no transparency. -->
+    <string name="fluvia_glass_solid">Solid</string>
+    <!-- Translators: Explains the Full glass level on the Appearance screen. -->
+    <string name="fluvia_glass_full_note">Clear glass with blur, light edge and lens effect. Needs Android 13 or newer.</string>
+    <!-- Translators: Explains the Frosted glass level on the Appearance screen. -->
+    <string name="fluvia_glass_frosted_note">Heavy blur with a milky, grainy tint. Easiest to read. Works on Android 12 and newer.</string>
+    <!-- Translators: Explains the Solid glass level on the Appearance screen. -->
+    <string name="fluvia_glass_solid_note">No transparency. Used when system Reduce transparency is on.</string>
+    <!-- Translators: Slider title for how much the glass blurs what is behind it. -->
+    <string name="fluvia_glass_blur">Glass blur</string>
+    <!-- Translators: Slider title for how strongly the glass is tinted. -->
+    <string name="fluvia_glass_tint">Glass tint</string>
+    <!-- Translators: Slider title for how bright the glass edge is. -->
+    <string name="fluvia_glass_edge">Glass edge</string>
+    <!-- Translators: Shown instead of a number when a glass slider follows the glass level; also the button that returns the slider to that state. -->
+    <string name="fluvia_glass_auto">Auto</string>
+    <!-- Translators: Slider value in density-independent pixels. %1$d is the number. -->
+    <string name="fluvia_value_dp">%1$d dp</string>
+    <!-- Translators: Hint under a colour setting that does not apply while song artwork colours are on. %1$s is the name of that switch. -->
+    <string name="fluvia_colours_need_manual">Turn off %1$s to choose your own</string>
+    <!-- Translators: Slider value as a percentage. %1$d is the number and %2$s is the percent sign. -->
+    <string name="fluvia_value_percent">%1$d%2$s</string>
+    <!-- Translators: Title of the accent colour setting on the Appearance screen. -->
+    <string name="fluvia_accent">Accent</string>
+    <!-- Translators: Accent colour name. -->
+    <string name="fluvia_accent_coral">Coral</string>
+    <!-- Translators: Accent colour name. -->
+    <string name="fluvia_accent_violet">Violet</string>
+    <!-- Translators: Accent colour name. -->
+    <string name="fluvia_accent_teal">Teal</string>
+    <!-- Translators: Accent colour name. -->
+    <string name="fluvia_accent_amber">Amber</string>
+    <!-- Translators: Accent colour name. -->
+    <string name="fluvia_accent_pink">Pink</string>
+    <!-- Translators: Accent colour name. -->
+    <string name="fluvia_accent_blue">Blue</string>
+    <!-- Translators: Title of the custom accent colour field. -->
+    <string name="fluvia_accent_custom">Custom accent colour</string>
+    <!-- Translators: Title of the custom background colour field. -->
+    <string name="fluvia_background_custom">Custom background colour</string>
+    <!-- Translators: Example colour code shown in the hex field error. Do not translate. -->
+    <string name="fluvia_hex_example" translatable="false">#FF5A5F</string>
+    <!-- Translators: Error under a colour field. %1$s is an example colour code. -->
+    <string name="fluvia_hex_invalid">Use a 6-digit hex code like %1$s</string>
+    <!-- Translators: Note under a custom colour that was moved so text stays readable. -->
+    <string name="fluvia_colour_adjusted">This colour was adjusted so text stays readable.</string>
+    <!-- Translators: Title of the background style setting on the Appearance screen. -->
+    <string name="fluvia_background">Background style</string>
+    <!-- Translators: Background style. -->
+    <string name="fluvia_background_aurora">Aurora</string>
+    <!-- Translators: Background style. -->
+    <string name="fluvia_background_mesh">Mesh</string>
+    <!-- Translators: Background style: one flat colour. -->
+    <string name="fluvia_background_solid">Solid</string>
+    <!-- Translators: Background style: colours taken from the cover art. -->
+    <string name="fluvia_background_album_art">Album art</string>
+    <!-- Translators: Title of the corner roundness setting. -->
+    <string name="fluvia_corners">Corners</string>
+    <!-- Translators: Corner style: square corners. -->
+    <string name="fluvia_corners_sharp">Sharp</string>
+    <!-- Translators: Corner style: default rounding. -->
+    <string name="fluvia_corners_soft">Soft</string>
+    <!-- Translators: Corner style: fully rounded. -->
+    <string name="fluvia_corners_pill">Pill</string>
+    <!-- Translators: Title of the spacing setting. -->
+    <string name="fluvia_spacing">Spacing</string>
+    <!-- Translators: Spacing level. -->
+    <string name="fluvia_spacing_compact">Compact</string>
+    <!-- Translators: Spacing level. -->
+    <string name="fluvia_spacing_comfortable">Comfortable</string>
+    <!-- Translators: Spacing level. -->
+    <string name="fluvia_spacing_spacious">Spacious</string>
+    <!-- Translators: Title of the text size setting. -->
+    <string name="fluvia_display_size">Display size</string>
+    <!-- Translators: Explains the display size setting. -->
+    <string name="fluvia_display_size_note">Changes text size across the whole app.</string>
+    <!-- Translators: Text size level. -->
+    <string name="fluvia_display_size_xs">Extra small</string>
+    <!-- Translators: Text size level. -->
+    <string name="fluvia_display_size_small">Small</string>
+    <!-- Translators: Text size level. -->
+    <string name="fluvia_display_size_medium">Medium</string>
+    <!-- Translators: Text size level. -->
+    <string name="fluvia_display_size_large">Large</string>
+    <!-- Translators: Title of the app font setting. -->
+    <string name="fluvia_font">Font</string>
+    <!-- Translators: Font group heading. -->
+    <string name="fluvia_font_group_sans">Sans</string>
+    <!-- Translators: Font group heading. -->
+    <string name="fluvia_font_group_rounded">Rounded</string>
+    <!-- Translators: Font group heading. -->
+    <string name="fluvia_font_group_serif">Serif</string>
+    <!-- Translators: Font group heading. -->
+    <string name="fluvia_font_group_display">Display</string>
+    <!-- Translators: Font group heading. -->
+    <string name="fluvia_font_group_mono">Mono</string>
+    <!-- Translators: Font group heading. -->
+    <string name="fluvia_font_group_handwriting">Handwriting</string>
+    <!-- Translators: Title of the icon pack setting. -->
+    <string name="fluvia_icon_pack">Icon pack</string>
+    <!-- Translators: Title of the icon style setting. -->
+    <string name="fluvia_icon_style">Icon style</string>
+    <!-- Translators: Icon style. -->
+    <string name="fluvia_icon_style_line">Line</string>
+    <!-- Translators: Icon style. -->
+    <string name="fluvia_icon_style_solid">Solid</string>
+    <!-- Translators: Icon style. -->
+    <string name="fluvia_icon_style_soft">Soft</string>
+    <!-- Translators: Icon style. -->
+    <string name="fluvia_icon_style_duo">Duo</string>
+    <!-- Translators: Title of the row on the Appearance screen that picks a ready-made combination of looks. -->
+    <string name="fluvia_looks">Looks</string>
+    <!-- Translators: Explains the Looks row: a Look sets several appearance options at once. -->
+    <string name="fluvia_looks_description">A Look sets theme, glass, colours, corners, font and icons together. Change any option below and it becomes Custom.</string>
+    <!-- Translators: Name of a Look (dark theme, frosted glass, violet accent). Proper noun, may be translated. -->
+    <string name="fluvia_look_midnight_frost">Midnight Frost</string>
+    <!-- Translators: One-line description shown under the Looks row while the Midnight Frost Look is selected. -->
+    <string name="fluvia_look_midnight_frost_description">Dark with frosted glass and a violet accent.</string>
+    <!-- Translators: Name of a Look (light theme, clear glass, coral accent). -->
+    <string name="fluvia_look_paper_light">Paper Light</string>
+    <!-- Translators: One-line description shown under the Looks row while the Paper Light Look is selected. -->
+    <string name="fluvia_look_paper_light_description">Bright and clean with clear glass and thin line icons.</string>
+    <!-- Translators: Name of a Look (dark theme, mesh background, pink accent). -->
+    <string name="fluvia_look_neon_night">Neon Night</string>
+    <!-- Translators: One-line description shown under the Looks row while the Neon Night Look is selected. -->
+    <string name="fluvia_look_neon_night_description">Dark with a pink mesh glow and two-tone icons.</string>
+    <!-- Translators: Name of a Look that takes its colours from the playing song's artwork. -->
+    <string name="fluvia_look_album_glow">Album Glow</string>
+    <!-- Translators: One-line description shown under the Looks row while the Album Glow Look is selected. -->
+    <string name="fluvia_look_album_glow_description">Colours and background follow the artwork of the song that is playing.</string>
+    <!-- Translators: Name of a Look (dark green, solid surfaces, sharp corners). -->
+    <string name="fluvia_look_forest_quiet">Forest Quiet</string>
+    <!-- Translators: One-line description shown under the Looks row while the Forest Quiet Look is selected. -->
+    <string name="fluvia_look_forest_quiet_description">Solid surfaces, sharp corners and a teal accent. No glass effects.</string>
+    <!-- Translators: Name of a Look (light theme, frosted glass, amber accent, pill corners). -->
+    <string name="fluvia_look_sunset_pop">Sunset Pop</string>
+    <!-- Translators: One-line description shown under the Looks row while the Sunset Pop Look is selected. -->
+    <string name="fluvia_look_sunset_pop_description">Light and warm with frosted glass, pill corners and a serif font.</string>
+    <!-- Translators: Chip shown in the Looks row when the options no longer match any Look. -->
+    <string name="fluvia_look_custom">Custom</string>
+    <!-- Translators: Description shown under the Looks row while the options no longer match any Look. -->
+    <string name="fluvia_look_custom_description">Your own mix of options. Pick a Look to start from one.</string>
+    <!-- Translators: Row in the About screen that opens the licences of the bundled fonts. -->
+    <string name="credits_fonts_title">Fonts</string>
 </resources>

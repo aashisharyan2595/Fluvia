@@ -77,7 +77,7 @@ class PlaybackViewModel(
         viewModelScope.launch {
             combine(
                 currentSong.map { it?.thumbnail }.distinctUntilChanged(),
-                snapshotFlow { Settings.shared.materialYouEnabled && Settings.shared.dynamicTheme },
+                snapshotFlow { Settings.shared.dynamicTheme },
             ) { thumbnail, enabled -> thumbnail.takeIf { enabled } }
                 .distinctUntilChanged()
                 .collectLatestWhileVisible(artworkUiVisible(application)) { url ->

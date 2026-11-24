@@ -61,6 +61,7 @@ import com.metrolist.android.ui.screens.settings.PlaybackBenchmarkSettingsScreen
 import com.metrolist.android.ui.screens.settings.StorageSettingsScreen
 import com.metrolist.android.ui.screens.settings.UpdateDetailsScreen
 import com.metrolist.android.ui.screens.settings.UpdatesScreen
+import com.metrolist.android.ui.screens.settings.fluviaThemeItems
 import com.metrolist.android.update.AppUpdateManager
 import com.metrolist.android.update.AppUpdateState
 import com.metrolist.android.utils.AppFontManager
@@ -333,7 +334,6 @@ fun SettingsScreen(
 
     val availablePages =
         buildSet {
-            add(SettingsPageId.FONTS)
             add(SettingsPageId.PLAYER_STYLE)
             add(SettingsPageId.PLAYER_ARTWORK)
             add(SettingsPageId.MINI_PLAYER_STYLE)
@@ -382,6 +382,7 @@ fun SettingsScreen(
             host =
                 SharedSettingsHost(
                     platform = SettingsPlatform.ANDROID,
+                    extraThemeItems = { fluviaThemeItems() },
                     lyricsPreview = { modifier ->
                         val viewModel: PlayerViewModel = koinInject()
                         val castState = playerConnection?.castState?.collectAsState()?.value

@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,8 +59,8 @@ import com.metrolist.android.playback.resolveIncomingPlaybackSong
 import com.metrolist.android.playback.toAndroidContentHints
 import com.metrolist.android.ui.IncomingDestination
 import com.metrolist.android.ui.MetrolistApp
+import com.metrolist.android.ui.fluvia.FluviaTheme
 import com.metrolist.android.ui.screens.settings.DiscordLoginFlow
-import com.metrolist.android.ui.theme.MetrolistTheme
 import com.metrolist.android.ui.toIncomingDestination
 import com.metrolist.android.utils.CrashHandler
 import com.metrolist.android.utils.isAndroidTv
@@ -325,7 +326,7 @@ class MainActivity : ComponentActivity() {
                     } else {
                         val tvDevice = remember { isAndroidTv() }
                         CompositionLocalProvider(LocalIsTv provides tvDevice) {
-                            MetrolistTheme {
+                            FluviaTheme(darkTheme = isSystemInDarkTheme(), artworkSeed = null) {
                                 OnboardingScreen(
                                     migration = app.legacyInstallMigration,
                                     hasLegacyInstallationOverride = app.hadLegacyInstallationAtStartup,

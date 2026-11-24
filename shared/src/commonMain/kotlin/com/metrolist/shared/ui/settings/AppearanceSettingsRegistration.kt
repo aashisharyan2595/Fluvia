@@ -80,6 +80,7 @@ internal fun SettingsUiRegistryBuilder.registerAppearanceSettings(host: SharedSe
             SettingsChoice(ThemePaletteStyle.CONTENT.name, stringResource(Res.string.theme_palette_content)),
         )
     val selectedPalette = paletteChoices.first { it.id == settings.themePaletteStyle.name }.label
+    val extraThemeItems = host.extraThemeItems
     page(
         id = SettingsPageId.APPEARANCE,
         title = stringResource(Res.string.appearance_title),
@@ -118,20 +119,22 @@ internal fun SettingsUiRegistryBuilder.registerAppearanceSettings(host: SharedSe
                 ) { settings.matugenTheme = it }
             }
             val matugenActive = host.platform == SettingsPlatform.DESKTOP && settings.matugenTheme
-            switch(
-                id = "materialYou",
-                title = stringResource(Res.string.material_you),
-                description = stringResource(Res.string.material_you_description),
-                checked = settings.materialYouEnabled,
-                enabled = !matugenActive,
-            ) { settings.materialYouEnabled = it }
+            if (extraThemeItems == null) {
+                switch(
+                    id = "materialYou",
+                    title = stringResource(Res.string.material_you),
+                    description = stringResource(Res.string.material_you_description),
+                    checked = settings.materialYouEnabled,
+                    enabled = !matugenActive,
+                ) { settings.materialYouEnabled = it }
+            }
             switch(
                 id = "uiEnhancements",
                 title = stringResource(Res.string.ui_enhancements),
                 description = stringResource(Res.string.ui_enhancements_description),
                 checked = settings.uiEnhancements,
             ) { settings.uiEnhancements = it }
-            if (!settings.materialYouEnabled && !matugenActive) {
+            if (extraThemeItems == null && !settings.materialYouEnabled && !matugenActive) {
                 custom(
                     id = "themeColor",
                     title = stringResource(Res.string.settings_theme_color),
@@ -153,18 +156,21 @@ internal fun SettingsUiRegistryBuilder.registerAppearanceSettings(host: SharedSe
                 title = stringResource(Res.string.song_artwork_colors),
                 description = stringResource(Res.string.song_artwork_colors_description),
                 checked = settings.dynamicTheme,
-                enabled = settings.materialYouEnabled && !matugenActive,
+                enabled = (extraThemeItems != null || settings.materialYouEnabled) && !matugenActive,
             ) { settings.dynamicTheme = it }
-            choice(
-                id = "paletteStyle",
-                title = stringResource(Res.string.theme_palette_style),
-                valueLabel = selectedPalette,
-                choices = paletteChoices,
-                selectedChoiceId = settings.themePaletteStyle.name,
-                description = stringResource(Res.string.settings_palette_style_summary),
-                enabled = !matugenActive,
-            ) { settings.themePaletteStyle = ThemePaletteStyle.valueOf(it) }
-            if (SettingsPageId.FONTS in host.availablePages) {
+            if (extraThemeItems == null) {
+                choice(
+                    id = "paletteStyle",
+                    title = stringResource(Res.string.theme_palette_style),
+                    valueLabel = selectedPalette,
+                    choices = paletteChoices,
+                    selectedChoiceId = settings.themePaletteStyle.name,
+                    description = stringResource(Res.string.settings_palette_style_summary),
+                    enabled = !matugenActive,
+                ) { settings.themePaletteStyle = ThemePaletteStyle.valueOf(it) }
+            }
+            extraThemeItems?.invoke(this)
+            if (extraThemeItems == null && SettingsPageId.FONTS in host.availablePages) {
                 navigation(
                     id = "fonts",
                     title = stringResource(Res.string.fonts),

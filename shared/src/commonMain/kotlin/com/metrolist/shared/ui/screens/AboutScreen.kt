@@ -12,6 +12,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -109,6 +110,7 @@ fun AboutScreen(
     onOpenCommunityLink: ((AboutCommunityLink) -> Unit)? = null,
     onDevtoolsUnlocked: () -> Unit = {},
     onPlayFavoriteSong: ((videoId: String) -> Unit)? = null,
+    extraCredits: (@Composable ColumnScope.() -> Unit)? = null,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     var logoClickCount by rememberSaveable { mutableIntStateOf(0) }
@@ -255,6 +257,8 @@ fun AboutScreen(
                         .clickable(role = Role.Button, onClickLabel = text.license) { openCommunityLink(aboutLicenseLink) }
                         .padding(16.dp),
             )
+
+            extraCredits?.invoke(this)
 
             Text(
                 text = stringResource(Res.string.stands_with_palestine),
