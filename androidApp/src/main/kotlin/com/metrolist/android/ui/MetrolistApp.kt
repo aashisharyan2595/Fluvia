@@ -1074,8 +1074,16 @@ fun MetrolistApp(
                         .drawBehind {
                             val left = horizontalSystemBars.getLeft(this, layoutDirection).toFloat()
                             val right = horizontalSystemBars.getRight(this, layoutDirection).toFloat()
-                            if (left > 0f && pureBlack) drawRect(appBackground, size = Size(left, size.height))
-                            if (right > 0f && pureBlack) drawRect(appBackground, topLeft = Offset(size.width - right, 0f), size = Size(right, size.height))
+                            if (left > 0f && pureBlack) {
+                                drawRect(appBackground, size = Size(left, size.height))
+                            }
+                            if (right > 0f && pureBlack) {
+                                drawRect(
+                                    appBackground,
+                                    topLeft = Offset(size.width - right, 0f),
+                                    size = Size(right, size.height),
+                                )
+                            }
                         },
                 ) {
                     DesktopCaptionBar(
@@ -1563,7 +1571,10 @@ fun MetrolistApp(
                                                             emptyList()
                                                         }
                                                     val topBarActions: @Composable RowScope.() -> Unit = {
-                                                        if (navigationState.topLevelRoute == Screen.Home && Screen.History !in railScreens) {
+                                                        if (
+                                                            navigationState.topLevelRoute == Screen.Home &&
+                                                            Screen.History !in railScreens
+                                                        ) {
                                                             TopBarIconButton(
                                                                 floating = useFloatingTopBar,
                                                                 onClick = { navigator.navigate(Screen.History) },
@@ -1612,7 +1623,10 @@ fun MetrolistApp(
                                                                 )
                                                             }
                                                         }
-                                                        if (Settings.shared.listenTogetherEnabled && Screen.ListenTogether !in railScreens) {
+                                                        if (
+                                                            Settings.shared.listenTogetherEnabled &&
+                                                            Screen.ListenTogether !in railScreens
+                                                        ) {
                                                             TopBarIconButton(
                                                                 floating = useFloatingTopBar,
                                                                 onClick = { navigator.navigate(Screen.ListenTogether) },
@@ -1631,7 +1645,13 @@ fun MetrolistApp(
                                                             }
                                                         }
                                                         if (!hasDesktopCaption) {
-                                                            appAccountButton(if (useFloatingTopBar) Modifier.floatingBarCircle() else Modifier)
+                                                            appAccountButton(
+                                                                if (useFloatingTopBar) {
+                                                                    Modifier.floatingBarCircle()
+                                                                } else {
+                                                                    Modifier
+                                                                },
+                                                            )
                                                         }
                                                     }
                                                     if (useFloatingTopBar) {
