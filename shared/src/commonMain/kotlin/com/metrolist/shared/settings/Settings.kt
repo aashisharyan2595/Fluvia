@@ -1186,7 +1186,7 @@ class Settings(
         validatePortableSettings(backup)
         val normalized =
             backup.copy(entries = backup.entries.map { it.copy(value = normalizeLegacyStringSetting(it.key, it.value)) })
-        importSettings(normalized, backupExcludedKeys, backupCredentialKeys + ArtistNameAliasesJsonKey)
+        importSettings(normalized, backupExcludedKeys, backupCredentialKeys + ArtistNameAliasesJsonKey + nullablePreferenceKeys)
     }
 
     fun restoreBackupSettingsSnapshot(snapshot: PortableSettings) {
@@ -1471,6 +1471,10 @@ class Settings(
                     AutoBackupLastSuccessEpochKey,
                 )
         private val backupExcludedKeys = nonPortableKeys - backupCredentialKeys
+
+        // Absent means automatic, so a backup without these keys must clear any value already on the device.
+        private val nullablePreferenceKeys =
+            setOf(GlassBlurKey, GlassTintKey, GlassEdgeKey, FluviaBackgroundHexKey, FluviaAccentHexKey)
         private const val PORTABLE_SETTINGS_VERSION = 1
         const val DEFAULT_LISTEN_TOGETHER_SERVER_URL = "wss://metroserverx.meowery.eu/ws"
         const val DEFAULT_FARADAY_PLAYER_CONFIG_URL =
