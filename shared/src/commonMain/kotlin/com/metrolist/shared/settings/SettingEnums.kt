@@ -198,3 +198,17 @@ enum class GridItemSize {
 }
 
 enum class SongShareLink { YOUTUBE_MUSIC, SONG_LINK }
+
+enum class GlassTier { FULL, FROSTED, SOLID }
+
+enum class CornerStyle { SHARP, SOFT, PILL }
+
+enum class SpacingDensity { COMPACT, COMFORTABLE, SPACIOUS }
+
+enum class DisplaySize { XS, SMALL, MEDIUM, LARGE }
+
+enum class FluviaBackground { AURORA, MESH, SOLID, ALBUM_ART }
+
+enum class IconStyle { LINE, SOLID, SOFT, DUO }
+
+enum class FluviaLook { MIDNIGHT_FROST, PAPER_LIGHT, NEON_NIGHT, ALBUM_GLOW, FOREST_QUIET, SUNSET_POP, CUSTOM }
