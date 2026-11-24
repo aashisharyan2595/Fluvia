@@ -74,8 +74,7 @@ fun ColumnScope.IconPackCredits() {
                                 title = packTitle,
                                 path = "files/licenses/icon-packs/${pack.id}/LICENSE",
                             )
-                    }
-                    .padding(12.dp),
+                    }.padding(12.dp),
         )
     }
     val fontsTitle = stringResource(Res.string.credits_fonts_title)

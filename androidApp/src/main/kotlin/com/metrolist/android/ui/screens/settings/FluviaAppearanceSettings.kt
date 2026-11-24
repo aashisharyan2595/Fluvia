@@ -740,7 +740,11 @@ private fun SettingsGroupRegistryBuilder.hexRow(
                     val trimmed = input.trim()
                     val cleared = trimmed.isEmpty()
                     val valid = parseHexColor(trimmed) != null
-                    if (cleared) onCommit(null) else if (valid) onCommit(normalizeHex(trimmed))
+                    if (cleared) {
+                        onCommit(null)
+                    } else if (valid) {
+                        onCommit(normalizeHex(trimmed))
+                    }
                     if (cleared || valid) onChanged()
                 },
                 label = { Text(title) },
@@ -758,7 +762,9 @@ private fun SettingsGroupRegistryBuilder.hexRow(
                             { Text(adjustedMessage) }
                         }
 
-                        else -> null
+                        else -> {
+                            null
+                        }
                     },
                 keyboardOptions =
                     KeyboardOptions(
