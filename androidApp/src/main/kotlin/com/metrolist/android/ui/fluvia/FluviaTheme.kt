@@ -90,7 +90,7 @@ fun FluviaTheme(
     val baseTypography = MetrolistTypography()
     val typography =
         remember(baseTypography, tokens.fontId, tokens.textScale) {
-            baseTypography.fluvia(fluviaFontFamily(tokens.fontId), tokens.textScale)
+            baseTypography.fluvia(fluviaFont(tokens.fontId).family, tokens.textScale)
         }
     val shapes = remember(tokens.shapeScale) { fluviaShapes(tokens.shapeScale) }
 
@@ -111,12 +111,8 @@ fun FluviaTheme(
     }
 }
 
-// Seam for font loading. Null keeps the locale-aware family MetrolistTypography selected; a loaded font replaces it.
-@Suppress("UNUSED_PARAMETER")
-private fun fluviaFontFamily(id: String): FontFamily? = null
-
 private fun Typography.fluvia(
-    fontFamily: FontFamily?,
+    fontFamily: FontFamily,
     scale: Float,
 ): Typography =
     copy(
@@ -153,9 +149,9 @@ private fun Typography.fluvia(
     )
 
 private fun TextStyle.fluvia(
-    fontFamily: FontFamily?,
+    fontFamily: FontFamily,
     scale: Float,
-): TextStyle = copy(fontFamily = fontFamily ?: this.fontFamily, fontSize = fontSize * scale, lineHeight = lineHeight * scale)
+): TextStyle = copy(fontFamily = fontFamily, fontSize = fontSize * scale, lineHeight = lineHeight * scale)
 
 private fun fluviaShapes(scale: Float): Shapes =
     Shapes(
