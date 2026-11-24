@@ -768,6 +768,10 @@
     <string name="credits_license_name">License</string>
     <!-- Translators: Supporting text beneath the credits license option in the About screen. -->
     <string name="credits_license_desc">Metrolist is licensed under GPL-3.0</string>
+    <!-- Translators: Section title above the licences of the bundled icon packs in the About screen. -->
+    <string name="credits_icon_packs_title">Icon packs</string>
+    <!-- Translators: Row in the About screen naming an icon pack and its licence. %1$s is the pack name; %2$s is the licence identifier. -->
+    <string name="credits_icon_pack_entry" translatable="false">%1$s · %2$s</string>
     <!-- Translators: Confirmation prompt for wanna play favorite song; retained for translation compatibility but not currently referenced by app code. -->
     <!-- Translators: Message explaining yeah; retained for translation compatibility but not currently referenced by app code. -->
     <!-- Translators: Label for credits collaborators section in the About screen. -->

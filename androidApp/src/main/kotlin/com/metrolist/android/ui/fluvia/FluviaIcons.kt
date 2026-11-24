@@ -165,7 +165,7 @@ private fun buildIcon(
                 pathData = nodes,
                 pathFillType = PathFillType.NonZero,
                 fill = black,
-                stroke = black.takeIf { owner.id != DEFAULT_PACK_ID },
+                stroke = black,
                 strokeLineWidth = FILLED_STROKE_WIDTH,
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round,

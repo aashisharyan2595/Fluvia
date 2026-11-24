@@ -8,7 +8,7 @@
  * Needs the icon packages, installed in a scratch directory outside the repository:
  *
  *   mkdir /tmp/fluvia-icons && cd /tmp/fluvia-icons
- *   npm install lucide-static feather-icons @tabler/icons @phosphor-icons/core @material-symbols/svg-400
+ *   npm install lucide-static@1.79.0 feather-icons@4.29.2 @tabler/icons@3.52.0 @phosphor-icons/core@2.1.1 @material-symbols/svg-400@0.49.0
  *
  * Then, from the repository root:
  *

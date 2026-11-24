@@ -56,6 +56,7 @@ fun AndroidAboutScreen(
             }
         },
         onDevtoolsUnlocked = onDevtoolsUnlocked,
+        extraCredits = { IconPackCredits() },
         onPlayFavoriteSong =
             playerConnection?.let { connection ->
                 { videoId ->
