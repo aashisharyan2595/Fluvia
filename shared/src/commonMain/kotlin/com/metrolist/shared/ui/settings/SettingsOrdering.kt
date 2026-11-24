@@ -58,6 +58,7 @@ internal fun List<SettingsGroupRegistration>.prioritized(page: SettingsPageId): 
                         "matugen",
                         "materialYou",
                         "themeColor",
+                        "fluviaLook",
                         "fluviaGlassTier",
                         "fluviaGlassBlur",
                         "fluviaGlassTint",

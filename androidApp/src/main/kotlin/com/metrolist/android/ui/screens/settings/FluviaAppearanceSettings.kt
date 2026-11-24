@@ -9,6 +9,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,13 +17,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
@@ -52,9 +56,13 @@ import com.metrolist.android.ui.fluvia.FluviaAccentPresets
 import com.metrolist.android.ui.fluvia.FluviaFont
 import com.metrolist.android.ui.fluvia.FluviaFontList
 import com.metrolist.android.ui.fluvia.FluviaIconPacks
+import com.metrolist.android.ui.fluvia.FluviaLookPreset
+import com.metrolist.android.ui.fluvia.FluviaLookPresets
 import com.metrolist.android.ui.fluvia.FontGroup
 import com.metrolist.android.ui.fluvia.IconPackData
 import com.metrolist.android.ui.fluvia.LocalFluviaTokens
+import com.metrolist.android.ui.fluvia.applyLook
+import com.metrolist.android.ui.fluvia.currentLook
 import com.metrolist.android.ui.fluvia.fluviaFont
 import com.metrolist.android.ui.fluvia.fluviaIconVector
 import com.metrolist.android.ui.fluvia.parseHexColor
@@ -112,6 +120,10 @@ import com.metrolist.shared.generated.resources.fluvia_icon_style_duo
 import com.metrolist.shared.generated.resources.fluvia_icon_style_line
 import com.metrolist.shared.generated.resources.fluvia_icon_style_soft
 import com.metrolist.shared.generated.resources.fluvia_icon_style_solid
+import com.metrolist.shared.generated.resources.fluvia_look_custom
+import com.metrolist.shared.generated.resources.fluvia_look_custom_description
+import com.metrolist.shared.generated.resources.fluvia_looks
+import com.metrolist.shared.generated.resources.fluvia_looks_description
 import com.metrolist.shared.generated.resources.fluvia_spacing
 import com.metrolist.shared.generated.resources.fluvia_spacing_comfortable
 import com.metrolist.shared.generated.resources.fluvia_spacing_compact
@@ -122,6 +134,7 @@ import com.metrolist.shared.generated.resources.song_artwork_colors
 import com.metrolist.shared.settings.CornerStyle
 import com.metrolist.shared.settings.DisplaySize
 import com.metrolist.shared.settings.FluviaBackground
+import com.metrolist.shared.settings.FluviaLook
 import com.metrolist.shared.settings.GlassTier
 import com.metrolist.shared.settings.IconStyle
 import com.metrolist.shared.settings.Settings
@@ -154,6 +167,8 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
     val manualColours = !settings.dynamicTheme
     val manualHint =
         if (manualColours) null else stringResource(Res.string.fluvia_colours_need_manual, stringResource(Res.string.song_artwork_colors))
+
+    looksRow()
 
     val tier = settings.glassTier
     val tierLabel = glassTierLabel(tier)
@@ -357,6 +372,139 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
             },
         selectedChoiceId = style.name,
     ) { settings.iconStyle = IconStyle.valueOf(it) }
+}
+
+/**
+ * Tiles for the six Looks and a Custom chip. The selection comes from [currentLook], which reads the settings, so it
+ * moves to Custom as soon as any single option stops matching the Look.
+ */
+@Composable
+private fun SettingsGroupRegistryBuilder.looksRow() {
+    val title = stringResource(Res.string.fluvia_looks)
+    val summary = stringResource(Res.string.fluvia_looks_description)
+    custom(id = "fluviaLook", title = title, description = summary) { onChanged ->
+        val selected = currentLook()
+        Column(Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(horizontal = 16.dp))
+            Text(
+                text = summary,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                FluviaLookPresets.forEach { preset ->
+                    val name = stringResource(preset.name)
+                    LookTile(name = name, selected = selected == preset.look, onClick = {
+                        applyLook(preset.look)
+                        onChanged()
+                    }) { LookPreview(preset) }
+                }
+                // Custom is a state, not a preset: choosing it keeps the settings as they are.
+                LookTile(
+                    name = stringResource(Res.string.fluvia_look_custom),
+                    selected = selected == FluviaLook.CUSTOM,
+                    onClick = {},
+                ) { CustomPreview() }
+            }
+            val shown = FluviaLookPresets.firstOrNull { it.look == selected }
+            Text(
+                text = stringResource(shown?.description ?: Res.string.fluvia_look_custom_description),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun LookTile(
+    name: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    preview: @Composable () -> Unit,
+) {
+    Column(
+        modifier =
+            Modifier
+                .width(112.dp)
+                .selectable(selected = selected, role = Role.RadioButton, onClick = onClick),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            Modifier
+                .size(width = 112.dp, height = 80.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .border(
+                    BorderStroke(
+                        width = if (selected) 3.dp else 1.dp,
+                        color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
+                    ),
+                    RoundedCornerShape(20.dp),
+                ),
+        ) { preview() }
+        Text(
+            text = name,
+            style = MaterialTheme.typography.labelLarge,
+            maxLines = 1,
+            modifier = Modifier.padding(top = 8.dp),
+        )
+    }
+}
+
+/** A miniature of the Look: its backdrop, font sample, glass strip and accent dot. */
+@Composable
+private fun LookPreview(preset: FluviaLookPreset) {
+    val ink = if (preset.isDark) Color.White else Color(0xFF1A0F2E)
+    val accent = FluviaAccentPresets[preset.accentIndex.coerceIn(FluviaAccentPresets.indices)]
+    Box(Modifier.fillMaxWidth().height(80.dp).background(preset.previewBackground)) {
+        Text(
+            text = "Aa",
+            style = MaterialTheme.typography.titleMedium,
+            fontFamily = fluviaFont(preset.fontId).family,
+            color = ink,
+            modifier = Modifier.padding(start = 12.dp, top = 8.dp),
+        )
+        Box(
+            Modifier
+                .align(Alignment.BottomCenter)
+                .padding(10.dp)
+                .fillMaxWidth()
+                .height(24.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(ink.copy(alpha = 0.14f)),
+        )
+        Box(
+            Modifier
+                .align(Alignment.BottomStart)
+                .padding(start = 16.dp, bottom = 16.dp)
+                .size(12.dp)
+                .clip(CircleShape)
+                .background(accent),
+        )
+    }
+}
+
+@Composable
+private fun CustomPreview() {
+    Box(
+        Modifier.fillMaxWidth().height(80.dp).background(MaterialTheme.colorScheme.surfaceVariant),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = "Aa",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
 }
 
 @Composable
