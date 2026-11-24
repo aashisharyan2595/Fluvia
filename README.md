@@ -33,7 +33,7 @@
 <h1><a id="fluvia"></a>Fluvia</h1>
 </div>
 
-Fluvia is an Android-only fork of Metrolist with its own look and deep appearance customisation. It keeps Metrolist's playback, library and sync code, and replaces the upstream UI in place. Fluvia does not track upstream UI changes. The fork lives on the `feat/fluvia-design-system` branch and builds as `io.github.aashisharyan2595.fluvia`.
+Fluvia is an Android-only fork of Metrolist with its own look and deep appearance customisation. It keeps Metrolist's playback, library and sync code, and replaces the upstream UI in place. Fluvia does not track upstream UI changes. The fork lives on the `feat/fluvia-design-system` branch and builds as `io.github.aashisharyan2595.fluvia`. Made by [Aashish Pandey](https://aashishpandey.com).
 
 > [!NOTE]
 > Fluvia is an early build and has only been compiled by CI. It has not been tested on a device. The download links further down point to upstream Metrolist releases, not to Fluvia.
@@ -66,7 +66,7 @@ The design and plan are in [docs/superpowers/specs](docs/superpowers/specs/2026-
 - **Upstream projects and services:** [MusicRecognizer](https://github.com/aleksey-saenko/MusicRecognizer) (Shazam recognition), [InnerTubeX](https://github.com/MetrolistGroup/innertubex) (YouTube streaming engine, built with help from [ZemerTeam](https://github.com/ZemerTeam/)), Lyprio (lyrics), [metroserver](https://github.com/MetrolistGroup/metroserver) (Listen Together backend) and translators on [Weblate](https://hosted.weblate.org/projects/Metrolist/).
 - **Icon packs:** [Lucide](https://lucide.dev) (ISC, Lucide Icons and Contributors), [Feather](https://feathericons.com) (MIT, Cole Bemis), [Tabler Icons](https://tabler.io/icons) (MIT, Paweł Kuna), [Phosphor](https://phosphoricons.com) (MIT, Phosphor Icons) and [Material Symbols](https://fonts.google.com/icons) (Apache-2.0, Google). The Fluvia pack is original to Metrolist under GPL-3.0. Versions and licence texts are in [the icon pack notices](shared/src/commonMain/composeResources/files/licenses/icon-packs/NOTICE.md).
 - **Fonts:** 36 families from Google Fonts, bundled unmodified under SIL OFL 1.1 through the `@expo-google-fonts` packages. Each copyright line is in [the font licences](shared/src/commonMain/composeResources/files/licenses/fonts/LICENSES.md).
-- **Design and build:** Fluvia's design system was planned and written with Claude (Anthropic) and directed by Aashish Pandey.
+- **Design and build:** Fluvia's design system was planned and written with Claude (Anthropic) and directed by [Aashish Pandey](https://aashishpandey.com).
 
 ### Disclaimer
 
