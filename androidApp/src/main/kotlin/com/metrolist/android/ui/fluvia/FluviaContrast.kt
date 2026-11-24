@@ -15,6 +15,9 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 const val MIN_TEXT_CONTRAST = 4.5
+
+// WCAG non-text contrast, for accents used as fills and controls rather than body text.
+const val MIN_UI_CONTRAST = 3.0
 private const val GLASS_TINT_STEP = 0.02f
 private const val COLOR_ADJUST_STEP = 0.04f
 

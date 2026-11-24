@@ -55,7 +55,7 @@ data class FluviaColors(
     val text2: Color,
     val accent: Color,
     val onAccent: Color,
-    /** True when the accent or the background had to be moved to keep text readable. */
+    /** True when a custom accent or custom background colour had to be moved to keep text readable. */
     val adjusted: Boolean,
 )
 
@@ -175,11 +175,14 @@ internal fun buildFluviaColors(
                 )
             customBackground != null ->
                 // Contrast is symmetric, so fitting the background against the text moves it towards black or white.
-                fitTextColor(customBackground, text, if (dark) Color.Black else Color.White)
+                fitTextColor(customBackground, text, if (dark) Color.Black else Color.White, MIN_TEXT_CONTRAST)
             else -> if (dark) DarkBase else LightBase
         }
-    val accent = fitTextColor(accentRaw, background, text)
-    val adjusted = accent != accentRaw || (artworkSeed == null && customBackground != null && background != customBackground)
+    val customAccentInUse = artworkSeed == null && customAccent != null
+    // Presets and artwork colours are fills and controls, so they only need the non-text ratio; a custom hex is held to text contrast.
+    val accent = fitTextColor(accentRaw, background, text, if (customAccentInUse) MIN_TEXT_CONTRAST else MIN_UI_CONTRAST)
+    val customBackgroundAdjusted = artworkSeed == null && customBackground != null && background != customBackground
+    val adjusted = (customAccentInUse && accent != accentRaw) || customBackgroundAdjusted
 
     return FluviaColors(
         background = background,
