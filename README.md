@@ -1,6 +1,10 @@
 <div align="center">
 
-<h1>Fluvia</h1>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/fluvia/fluvia-logo-dark.svg">
+  <img src="assets/fluvia/fluvia-logo-light.svg" alt="Fluvia" height="120">
+</picture>
+
 <h3>A customisable, glass-styled YouTube Music client for Android</h3>
 
 <p>
@@ -109,127 +113,6 @@ Fluvia adds the appearance features at the end of this list. Everything else is 
 
 <p>Fluvia has no published releases yet. To get an APK, open <a href="https://github.com/aashisharyan2595/Fluvia/actions/workflows/build-android.yml">Actions, Build Android</a>, choose <b>Run workflow</b> with the <code>debug</code> variant, then download the <code>android-build</code> artifact from the finished run. See <a href="#about-fluvia">About Fluvia</a> for local builds.</p>
 
-<details>
-<summary>Upstream Metrolist downloads (not Fluvia)</summary>
-
-<p>Setup guides: <a href="docs/install/android.md">Android</a> · <a href="docs/install/ios.md">iOS</a> · <a href="docs/install/windows.md">Windows</a> · <a href="docs/install/macos.md">macOS</a> · <a href="docs/install/linux.md">Linux</a></p>
-
-<h3>Android</h3>
-<p><sub>Android 7+ · updates itself from inside the app</sub></p>
-<p>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest/download/Metrolist.apk"><img alt="Download the stable Android APK" src="assets/badges/platform/android-stable.svg"></a>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/download/nightly/Metrolist.apk"><img alt="Download the nightly Android APK" src="assets/badges/platform/android-nightly.svg"></a>
-</p>
-<p>
-  <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/MetrolistGroup/Metrolist/"><img alt="Add Metrolist to Obtainium" src="assets/badges/platform/store-obtainium.svg"></a>
-  <a href="https://apt.izzysoft.de/fdroid/index/apk/com.metrolist.music"><img alt="Get Metrolist from IzzyOnDroid" src="assets/badges/platform/store-izzyondroid.svg"></a>
-  <a href="https://www.openapk.net/metrolist/com.metrolist.music/"><img alt="Get Metrolist on OpenAPK" src="assets/badges/platform/store-openapk.svg"></a>
-</p>
-
-<h3>iOS</h3>
-<p><sub>iPhone and iPad · iOS 15+ · sideload with AltStore, SideStore, TrollStore or Sideloadly</sub></p>
-<p>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest/download/Metrolist.ipa"><img alt="Download the iOS IPA" src="assets/badges/platform/ios-ipa.svg"></a>
-</p>
-<p><sub>For updates, add the <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest/download/metrolist-altstore.json">AltStore and SideStore source</a></sub></p>
-
-<h3>Windows</h3>
-<p><sub>Windows 10+</sub></p>
-<p>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest"><img alt="Download the Windows x64 installer" src="assets/badges/platform/windows-installer.svg"></a>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest/download/Metrolist-Desktop-windows.zip"><img alt="Download the portable Windows x64 ZIP" src="assets/badges/platform/windows-portable.svg"></a>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest"><img alt="Download the portable Windows ARM64 ZIP" src="assets/badges/platform/windows-arm64.svg"></a>
-</p>
-<p><b>Scoop</b></p>
-
-```powershell
-scoop bucket add metrolist https://github.com/MetrolistGroup/scoop-bucket
-scoop install metrolist/metrolist
-```
-
-<h3>macOS</h3>
-<p><sub>macOS 15+ · unsigned, so you need to trust it on first launch</sub></p>
-<p>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest"><img alt="Download the macOS DMG for Apple silicon" src="assets/badges/platform/macos-apple-silicon.svg"></a>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest"><img alt="Download the macOS DMG for Intel" src="assets/badges/platform/macos-intel.svg"></a>
-</p>
-<p><b>Homebrew</b></p>
-
-```sh
-brew trust metrolistgroup/tap
-brew install --cask metrolistgroup/tap/metrolist
-brew install metrolistgroup/tap/metrolist
-```
-
-<h3>Linux</h3>
-<p><sub>glibc · x86_64 and ARM64</sub></p>
-<p>
-  <a href="https://github.com/MetrolistGroup/Metrolist/releases/latest"><img alt="Download the Linux AppImage" src="assets/badges/platform/linux-appimage.svg"></a>
-</p>
-<p><b>Flatpak</b> <sub>from <a href="https://flatpark.org/apps/com.metrolist.desktop/">flatpark</a></sub></p>
-
-```sh
-flatpak install https://dl.flatpark.org/com.metrolist.desktop.flatpakref
-```
-
-<p><b>Arch Linux</b> <sub>community <a href="https://aur.archlinux.org/packages/metrolist-desktop-bin">AUR package</a>, x86_64 only</sub></p>
-
-```sh
-yay -S metrolist-desktop-bin
-```
-
-<p><b>Nix</b></p>
-
-```sh
-nix profile install github:MetrolistGroup/Metrolist
-```
-
-<p><b>Homebrew</b></p>
-
-```sh
-brew trust metrolistgroup/tap
-brew install --cask metrolistgroup/tap/metrolist
-brew install metrolistgroup/tap/metrolist
-```
-
-</details>
-
-</div>
-
-<br>
-
-<div align="center">
-
-<h1><a id="support-the-project"></a>Support upstream Metrolist</h1>
-
-Fluvia is built on Metrolist, which is free and open-source. These links support the Metrolist developers, not Fluvia.
-
-<p>
-  <a href="https://github.com/sponsors/nyxiereal">
-    <img src="https://img.shields.io/badge/Sponsor-nyxiereal-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Sponsor nyxiereal" />
-  </a>
-  <a href="https://www.buymeacoffee.com/mostafaalagamy">
-    <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-mostafaalagamy-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy Me a Coffee" />
-  </a>
-  <a href="https://github.com/sponsors/l6t9">
-    <img src="https://img.shields.io/badge/Sponsor-l6t9-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Sponsor l6t9" />
-  </a>
-  <a href="https://github.com/sponsors/adrielggmotion">
-    <img src="https://img.shields.io/badge/Sponsor-adrielggmotion-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Sponsor adrielggmotion" />
-  </a>
-</p>
-
-<details>
-  <summary>Donate Monero to Mostafa Alagamy</summary>
-  <p>
-    <img src="assets/XMR.png" alt="Monero QR code" width="150" />
-  </p>
-
-```text
-44XjSELSWcgJTZiCKzjpCQWyXhokrH9RqH3rpp35FkSKi57T25hniHWHQNhLeXyFn3DDYqufmfRB1iEtENerZpJc7xJCcqt
-```
-
-</details>
 </div>
 
 <br>
