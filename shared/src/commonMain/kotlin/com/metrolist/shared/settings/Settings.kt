@@ -95,6 +95,7 @@ import com.metrolist.shared.constants.FluviaBackgroundHexKey
 import com.metrolist.shared.constants.FluviaBackgroundKey
 import com.metrolist.shared.constants.FluviaFontKey
 import com.metrolist.shared.constants.FluviaLookKey
+import com.metrolist.shared.constants.FluviaNowPlayingKey
 import com.metrolist.shared.constants.ForceBottomNavBarKey
 import com.metrolist.shared.constants.GitHubNTransformConfigUrlKey
 import com.metrolist.shared.constants.GitHubNTransformEnabledKey
@@ -372,6 +373,7 @@ class Settings(
     var iconPack by preference(IconPackKey, "fluvia")
     var iconStyle by preference(IconStyleKey, IconStyle.SOFT)
     var fluviaLook by preference(FluviaLookKey, FluviaLook.CUSTOM)
+    var fluviaNowPlaying by preference(FluviaNowPlayingKey, true)
     var matugenTheme by preference(MatugenThemeKey, false)
 
     var appFont by preference(FontOption.SYSTEM)

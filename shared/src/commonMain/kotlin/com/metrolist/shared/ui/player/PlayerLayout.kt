@@ -1799,7 +1799,7 @@ internal fun PlayerActionRow(
 }
 
 @Composable
-internal fun LyricsViewWithPosition(
+fun LyricsViewWithPosition(
     viewModel: PlayerViewModel,
     lyrics: List<LyricsEntry>,
     songwriters: List<String> = emptyList(),

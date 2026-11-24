@@ -126,6 +126,8 @@ import com.metrolist.shared.generated.resources.fluvia_look_custom
 import com.metrolist.shared.generated.resources.fluvia_look_custom_description
 import com.metrolist.shared.generated.resources.fluvia_looks
 import com.metrolist.shared.generated.resources.fluvia_looks_description
+import com.metrolist.shared.generated.resources.fluvia_now_playing
+import com.metrolist.shared.generated.resources.fluvia_now_playing_desc
 import com.metrolist.shared.generated.resources.fluvia_spacing
 import com.metrolist.shared.generated.resources.fluvia_spacing_comfortable
 import com.metrolist.shared.generated.resources.fluvia_spacing_compact
@@ -171,6 +173,13 @@ fun SettingsGroupRegistryBuilder.fluviaThemeItems() {
         if (manualColours) null else stringResource(Res.string.fluvia_colours_need_manual, stringResource(Res.string.song_artwork_colors))
 
     looksRow()
+
+    switch(
+        id = "fluviaNowPlaying",
+        title = stringResource(Res.string.fluvia_now_playing),
+        description = stringResource(Res.string.fluvia_now_playing_desc),
+        checked = settings.fluviaNowPlaying,
+    ) { settings.fluviaNowPlaying = it }
 
     val tier = settings.glassTier
     val tierLabel = glassTierLabel(tier)
